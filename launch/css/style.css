@@ -653,3 +653,12 @@ form label {
   width: 35px;
   height: 35px;
 }
+
+/* Added this to handle iOS specific viewport issues */
+@media screen and (max-device-width: 1024px) {
+  .fh5co-cover {
+    /* Adjust background sizing for iOS */
+    background-attachment: scroll;
+    min-height: -webkit-fill-available; /* Specific to iOS */
+  }
+}
