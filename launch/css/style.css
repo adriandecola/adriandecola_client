@@ -131,6 +131,7 @@ figure {
   position: relative;
   background-position: center center;
   width: 100%;
+  background-attachment: scroll;
 }
 .fh5co-cover .overlay {
   z-index: 0;
