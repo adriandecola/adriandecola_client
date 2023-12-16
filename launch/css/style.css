@@ -125,22 +125,20 @@ figure {
 }
 
 .fh5co-cover {
-  min-height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
-  background-position: center center;g
+  background-position: center center;
   width: 100%;
-  background-attachment: scroll;
+  min-height: 100vh;
 }
 .fh5co-cover .overlay {
-  z-index: 0;
   position: absolute;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .fh5co-cover .display-t,
