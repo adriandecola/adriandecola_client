@@ -79,3 +79,24 @@ function displayCompleteHistory() {
     displayMessage(msg.content, msg.role);
   });
 }
+
+///////TEST
+document
+  .getElementById('test-button')
+  .addEventListener('click', async function () {
+    const outputDiv = document.getElementById('test-output');
+    try {
+      const response = await fetch('https://api.adriandecola.com/test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      outputDiv.textContent = 'Test response: ' + data.message;
+    } catch (err) {
+      outputDiv.textContent = 'Test failed: ' + err.message;
+      console.error('Fetch error:', err);
+    }
+  });
