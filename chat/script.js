@@ -1,3 +1,4 @@
+// chat/script.js
 let messageHistory = [];
 
 document
