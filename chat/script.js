@@ -45,14 +45,17 @@ async function sendMessage(userMessage) {
   }
 }
 
+let currentAssistantMessageDiv = null; // Reference to the current assistant message element
+
 async function readStream(reader) {
   try {
     let done, value;
+    let accumulatedMessage = ''; // To accumulate the message content
+
     while ((({ done, value } = await reader.read()), !done)) {
       const chunk = new TextDecoder().decode(value);
       console.log('Received chunk:', chunk);
 
-      // Split the chunk by new lines and process each line
       const lines = chunk.split('\n');
       for (const line of lines) {
         if (line.startsWith('data:')) {
@@ -64,9 +67,10 @@ async function readStream(reader) {
               messageHistory = data.completeHistory;
               console.log('Updating complete history:', messageHistory);
               displayCompleteHistory();
+              currentAssistantMessageDiv = null; // Reset after displaying history
             } else if (data.message) {
-              // Process and display each message
-              displayMessage(data.message, 'assistant');
+              accumulatedMessage += data.message; // Accumulate the message content
+              updateAssistantMessage(accumulatedMessage);
             }
           } catch (parseError) {
             console.error('Error parsing line:', parseError);
@@ -78,6 +82,23 @@ async function readStream(reader) {
   } catch (err) {
     console.error('Stream reading error:', err);
   }
+}
+
+function updateAssistantMessage(message) {
+  if (!currentAssistantMessageDiv) {
+    currentAssistantMessageDiv = createMessageDiv('assistant');
+  }
+  currentAssistantMessageDiv.querySelector('.content').textContent = message;
+}
+
+function createMessageDiv(role) {
+  const messagesContainer = document.getElementById('messages');
+  const messageDiv = document.createElement('div');
+  messageDiv.classList.add('message', role);
+  messageDiv.innerHTML = '<span class="content"></span>';
+  messagesContainer.appendChild(messageDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  return messageDiv;
 }
 
 function displayCompleteHistory() {
