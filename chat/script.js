@@ -24,7 +24,8 @@ function displayMessage(message, role) {
 
 async function sendMessage(userMessage) {
   try {
-    const response = await fetch('https://api.adriandecola.com/chat', {
+    // Send the user's message to the server
+    await fetch('https://api.adriandecola.com/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,29 +36,26 @@ async function sendMessage(userMessage) {
       }),
     });
 
-    const reader = response.body.getReader();
-    const stream = new ReadableStream({
-      async start(controller) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) {
-            break;
-          }
-          const chunk = new TextDecoder().decode(value);
-          handleStreamChunk(chunk);
-          controller.enqueue(value);
-        }
-        controller.close();
-      },
-    });
+    // Setup EventSource to listen for messages from the server
+    const eventSource = new EventSource('https://api.adriandecola.com/chat');
 
-    const newResponse = new Response(stream);
-    const data = await newResponse.json();
+    eventSource.onmessage = function (event) {
+      const data = JSON.parse(event.data);
 
-    if (data.completeHistory) {
-      messageHistory = data.completeHistory;
-      displayCompleteHistory();
-    }
+      // Check if data contains the completeHistory
+      if (data.completeHistory) {
+        messageHistory = data.completeHistory;
+        displayCompleteHistory();
+      } else {
+        // Handle individual message parts
+        displayMessage(data.message, 'assistant');
+      }
+    };
+
+    eventSource.onerror = function (err) {
+      console.error('EventSource error:', err);
+      eventSource.close();
+    };
   } catch (err) {
     console.error('Fetch error:', err);
   }
