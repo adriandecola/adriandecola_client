@@ -1,4 +1,5 @@
 // chat/script.js
+// script.js
 let messageHistory = [];
 
 document
@@ -24,8 +25,7 @@ function displayMessage(message, role) {
 
 async function sendMessage(userMessage) {
   try {
-    // Send the user's message to the server
-    await fetch('https://api.adriandecola.com/chat', {
+    const response = await fetch('https://api.adriandecola.com/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,38 +36,38 @@ async function sendMessage(userMessage) {
       }),
     });
 
-    // Setup EventSource to listen for messages from the server
-    const eventSource = new EventSource('https://api.adriandecola.com/chat');
-
-    eventSource.onmessage = function (event) {
-      const data = JSON.parse(event.data);
-
-      // Check if data contains the completeHistory
-      if (data.completeHistory) {
-        messageHistory = data.completeHistory;
-        displayCompleteHistory();
-      } else {
-        // Handle individual message parts
-        displayMessage(data.message, 'assistant');
-      }
-    };
-
-    eventSource.onerror = function (err) {
-      console.error('EventSource error:', err);
-      eventSource.close();
-    };
+    const reader = response.body.getReader();
+    readStream(reader);
   } catch (err) {
     console.error('Fetch error:', err);
   }
 }
 
-function handleStreamChunk(chunk) {
-  if (chunk.startsWith('data:')) {
-    const message = JSON.parse(chunk.replace('data:', '').trim());
-    if (!message.completeHistory) {
-      displayMessage(message, 'assistant');
-    }
-  }
+function readStream(reader) {
+  reader
+    .read()
+    .then(({ done, value }) => {
+      if (done) {
+        return;
+      }
+
+      const chunk = new TextDecoder().decode(value);
+      if (chunk.startsWith('data:')) {
+        const data = JSON.parse(chunk.slice(5)); // Remove 'data:' prefix
+        if (data.completeHistory) {
+          messageHistory = data.completeHistory;
+          displayCompleteHistory();
+        } else {
+          // Process and display each chunk of the assistant's response
+          displayMessage(data, 'assistant');
+        }
+      }
+
+      readStream(reader);
+    })
+    .catch((err) => {
+      console.error('Stream reading error:', err);
+    });
 }
 
 function displayCompleteHistory() {
