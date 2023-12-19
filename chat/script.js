@@ -45,41 +45,39 @@ async function sendMessage(userMessage) {
   }
 }
 
-function readStream(reader) {
-  reader
-    .read()
-    .then(({ done, value }) => {
-      if (done) {
-        console.log('Stream reading completed');
-        return;
-      }
-
+async function readStream(reader) {
+  try {
+    let done, value;
+    while ((({ done, value } = await reader.read()), !done)) {
       const chunk = new TextDecoder().decode(value);
       console.log('Received chunk:', chunk);
 
-      if (chunk.startsWith('data:')) {
-        try {
-          const data = JSON.parse(chunk.slice(5)); // Remove 'data:' prefix
-          console.log('Parsed data:', data);
+      // Split the chunk by new lines and process each line
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data:')) {
+          try {
+            const data = JSON.parse(line.slice(5)); // Remove 'data:' prefix
+            console.log('Parsed data:', data);
 
-          if (data.completeHistory) {
-            messageHistory = data.completeHistory;
-            console.log('Updating complete history:', messageHistory);
-            displayCompleteHistory();
-          } else {
-            // Process and display each chunk of the assistant's response
-            displayMessage(data, 'assistant');
+            if (data.completeHistory) {
+              messageHistory = data.completeHistory;
+              console.log('Updating complete history:', messageHistory);
+              displayCompleteHistory();
+            } else if (data.message) {
+              // Process and display each message
+              displayMessage(data.message, 'assistant');
+            }
+          } catch (parseError) {
+            console.error('Error parsing line:', parseError);
           }
-        } catch (parseError) {
-          console.error('Error parsing chunk:', parseError);
         }
       }
-
-      readStream(reader);
-    })
-    .catch((err) => {
-      console.error('Stream reading error:', err);
-    });
+    }
+    console.log('Stream reading completed');
+  } catch (err) {
+    console.error('Stream reading error:', err);
+  }
 }
 
 function displayCompleteHistory() {
