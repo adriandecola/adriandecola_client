@@ -1,5 +1,4 @@
 // chat/script.js
-// script.js
 let messageHistory = [];
 
 document
@@ -10,11 +9,13 @@ document
     const userMessage = messageInput.value;
     messageInput.value = '';
 
+    console.log('Sending message:', userMessage);
     displayMessage(userMessage, 'user');
     sendMessage(userMessage);
   });
 
 function displayMessage(message, role) {
+  console.log('Displaying message:', message, 'Role:', role);
   const messagesContainer = document.getElementById('messages');
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message', role);
@@ -25,6 +26,7 @@ function displayMessage(message, role) {
 
 async function sendMessage(userMessage) {
   try {
+    console.log('Posting to /chat');
     const response = await fetch('https://api.adriandecola.com/chat', {
       method: 'POST',
       headers: {
@@ -48,18 +50,28 @@ function readStream(reader) {
     .read()
     .then(({ done, value }) => {
       if (done) {
+        console.log('Stream reading completed');
         return;
       }
 
       const chunk = new TextDecoder().decode(value);
+      console.log('Received chunk:', chunk);
+
       if (chunk.startsWith('data:')) {
-        const data = JSON.parse(chunk.slice(5)); // Remove 'data:' prefix
-        if (data.completeHistory) {
-          messageHistory = data.completeHistory;
-          displayCompleteHistory();
-        } else {
-          // Process and display each chunk of the assistant's response
-          displayMessage(data, 'assistant');
+        try {
+          const data = JSON.parse(chunk.slice(5)); // Remove 'data:' prefix
+          console.log('Parsed data:', data);
+
+          if (data.completeHistory) {
+            messageHistory = data.completeHistory;
+            console.log('Updating complete history:', messageHistory);
+            displayCompleteHistory();
+          } else {
+            // Process and display each chunk of the assistant's response
+            displayMessage(data, 'assistant');
+          }
+        } catch (parseError) {
+          console.error('Error parsing chunk:', parseError);
         }
       }
 
@@ -71,6 +83,7 @@ function readStream(reader) {
 }
 
 function displayCompleteHistory() {
+  console.log('Displaying complete history:', messageHistory);
   const messagesContainer = document.getElementById('messages');
   messagesContainer.innerHTML = '';
   messageHistory.forEach((msg) => {
