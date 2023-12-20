@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Earth Ally</title>
+    <title>Carbon Chatter</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="chat-container">
+        <div id="chat-header">
+            <img src="images/carbon_chatter_icon.png" alt="Carbon Chatter Icon" id="chat-icon">
+            <div id="chat-title">Carbon Chatter</div>
+        </div>
         <div id="messages"></div>
         <form id="message-form">
-            <input type="text" id="message-input" placeholder="Type your message here...">
+            <textarea id="message-input" placeholder="Type your message here..." maxlength="120"></textarea>
+            <div id="word-count">0/120</div>
             <button type="submit">Send</button>
         </form>
-        <button id="test-button">Test Connection</button>
-        <div id="test-output">Test output will be displayed here</div>
     </div>
     <script src="script.js"></script>
 </body>

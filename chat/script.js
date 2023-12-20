@@ -6,12 +6,18 @@ document
   .addEventListener('submit', function (event) {
     event.preventDefault();
     const messageInput = document.getElementById('message-input');
-    const userMessage = messageInput.value;
-    messageInput.value = '';
+    const userMessage = messageInput.value.trim();
 
-    console.log('Sending message:', userMessage);
-    displayMessage(userMessage, 'user');
-    sendMessage(userMessage);
+    if (userMessage) {
+      console.log('Sending message:', userMessage);
+      displayMessage(userMessage, 'user');
+      sendMessage(userMessage);
+
+      // Reset textarea height and clear input after sending a message
+      messageInput.style.height = '20px'; // Reset to minimum height
+      messageInput.value = '';
+      updateWordCount(0); // Reset word count
+    }
   });
 
 function displayMessage(message, role) {
@@ -88,7 +94,11 @@ function updateAssistantMessage(message) {
   if (!currentAssistantMessageDiv) {
     currentAssistantMessageDiv = createMessageDiv('assistant');
   }
-  currentAssistantMessageDiv.querySelector('.content').textContent = message;
+  // Replace newline characters with HTML line breaks
+  const formattedMessage = message.replace(/\n/g, '<br>');
+
+  currentAssistantMessageDiv.querySelector('.content').innerHTML =
+    formattedMessage;
 }
 
 function createMessageDiv(role) {
@@ -110,23 +120,24 @@ function displayCompleteHistory() {
   });
 }
 
-///////TEST
-document
-  .getElementById('test-button')
-  .addEventListener('click', async function () {
-    const outputDiv = document.getElementById('test-output');
-    try {
-      const response = await fetch('https://api.adriandecola.com/test', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+function updateWordCount(count) {
+  document.getElementById('word-count').textContent = `${count}/120`;
+}
 
-      const data = await response.json();
-      outputDiv.textContent = 'Test response: ' + data.message;
-    } catch (err) {
-      outputDiv.textContent = 'Test failed: ' + err.message;
-      console.error('Fetch error:', err);
-    }
+document
+  .getElementById('message-input')
+  .addEventListener('input', function (event) {
+    const messageInput = event.target;
+    const words = messageInput.value.split(/\s+/).filter(Boolean);
+    const wordCount = Math.min(words.length, 120);
+
+    updateWordCount(wordCount);
+
+    // Adjust textarea height to fit content
+    resizeTextarea(messageInput);
   });
+
+function resizeTextarea(textarea) {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}

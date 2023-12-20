@@ -1,74 +1,119 @@
-body,
-html {
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #333; /* Dark grey background */
+  color: #fff; /* White text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
 
+/* Chat Container Styles */
 #chat-container {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  height: 100vh;
+  background-color: #444; /* Slightly lighter grey for chat container */
+  border-radius: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 90vh;
 }
 
+/* Chat Header Styles */
+#chat-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #333; /* Dark grey background */
+}
+
+#chat-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+#chat-title {
+  color: #4caf50; /* Green text */
+  font-size: 1.5em;
+  margin-top: 5px;
+}
+
+/* Messages Area Styles */
 #messages {
   flex-grow: 1;
   overflow-y: auto;
+  padding: 20px;
+  background-color: #333; /* Dark grey background */
+}
+
+.message {
   padding: 10px;
-}
-
-#messages .message {
   margin-bottom: 10px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-#messages .user {
-  text-align: right;
-}
-
-#messages .user .content {
-  background-color: #dcf8c6;
-  display: inline-block;
-  padding: 5px 10px;
   border-radius: 10px;
+  word-break: break-word; /* Ensures text breaks to prevent overflow */
 }
 
-#messages .assistant .content {
-  background-color: #e5e5ea;
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 10px;
+.message.user {
+  background-color: #4caf50; /* Green background for user messages */
+  align-self: flex-end;
 }
 
+.message.assistant {
+  background-color: #666; /* Lighter grey for assistant messages */
+  align-self: flex-start;
+}
+
+/* Message Form Styles */
 #message-form {
   display: flex;
+  align-items: flex-start; /* Align items to the top */
+  background-color: #444; /* Slightly lighter grey for form area */
   padding: 10px;
 }
 
-#message-form input[type='text'] {
+#message-input {
   flex-grow: 1;
   padding: 10px;
-  border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 10px;
+  border: none;
+  background-color: #333; /* Dark grey background */
+  color: #fff; /* White text */
+  resize: none; /* Prevent manual resize */
+  min-height: 20px; /* Minimum height for one line */
 }
 
-#message-form button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
+#word-count {
+  color: #aaa; /* Light grey for word count */
+  margin: 0 10px; /* Added margin for spacing */
+  align-self: center;
+}
+
+button {
+  background-color: #4caf50; /* Green button */
   color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-#message-form button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #3e8e41;
+}
+
+/* Scrollbar Styles */
+#messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+  background: #4caf50; /* Green scrollbar thumb */
+  border-radius: 4px;
 }
