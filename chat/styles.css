@@ -12,6 +12,17 @@ body {
   width: 100vw;
 }
 
+body,
+html {
+  height: 100%; /* Ensure body and html cover the full height */
+  overflow: hidden; /* Prevent scrolling on the body */
+}
+
+#chat-container {
+  max-height: 100%; /* Ensure chat container doesn't exceed viewport height */
+  overflow: auto; /* Allow scrolling within the chat container only */
+}
+
 /* Chat Container Styles */
 #chat-container {
   width: 100%;
