@@ -5,20 +5,47 @@ document
   .getElementById('message-form')
   .addEventListener('submit', function (event) {
     event.preventDefault();
-    const messageInput = document.getElementById('message-input');
-    const userMessage = messageInput.value.trim();
+    sendMessageFromInput();
+  });
 
-    if (userMessage) {
-      console.log('Sending message:', userMessage);
-      displayMessage(userMessage, 'user');
-      sendMessage(userMessage);
-
-      // Reset textarea height and clear input after sending a message
-      messageInput.style.height = '20px'; // Reset to minimum height
-      messageInput.value = '';
-      updateWordCount(0); // Reset word count
+document
+  .getElementById('message-input')
+  .addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessageFromInput();
     }
   });
+
+document
+  .getElementById('message-input')
+  .addEventListener('input', updateTextarea);
+
+function sendMessageFromInput() {
+  const messageInput = document.getElementById('message-input');
+  const userMessage = messageInput.value.trim();
+
+  if (userMessage) {
+    console.log('Sending message:', userMessage);
+    displayMessage(userMessage, 'user');
+    sendMessage(userMessage);
+
+    messageInput.value = '';
+    updateTextarea();
+  }
+}
+
+function updateTextarea() {
+  const messageInput = document.getElementById('message-input');
+  const wordCount = messageInput.value.split(/\s+/).filter(Boolean).length;
+  document.getElementById('word-count').textContent = `${Math.min(
+    wordCount,
+    120
+  )}/120`;
+
+  messageInput.style.height = 'auto';
+  messageInput.style.height = messageInput.scrollHeight + 'px';
+}
 
 function displayMessage(message, role) {
   console.log('Displaying message:', message, 'Role:', role);
@@ -123,19 +150,6 @@ function displayCompleteHistory() {
 function updateWordCount(count) {
   document.getElementById('word-count').textContent = `${count}/120`;
 }
-
-document
-  .getElementById('message-input')
-  .addEventListener('input', function (event) {
-    const messageInput = event.target;
-    const words = messageInput.value.split(/\s+/).filter(Boolean);
-    const wordCount = Math.min(words.length, 120);
-
-    updateWordCount(wordCount);
-
-    // Adjust textarea height to fit content
-    resizeTextarea(messageInput);
-  });
 
 function resizeTextarea(textarea) {
   textarea.style.height = 'auto';
