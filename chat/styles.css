@@ -46,6 +46,13 @@ body {
 }
 
 /* Messages Area Styles */
+#messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #333; /* Dark grey background */
+}
+
 .message-wrapper {
   max-width: 70%; /* Limit maximum width of messages */
 }
@@ -58,43 +65,24 @@ body {
   margin-right: auto; /* Keep assistant messages to the left */
 }
 
-.message.user {
-  background-color: #4caf50; /* Green background for user messages */
-}
-
-/* Messages Area Styles */
-#messages {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 20px;
-  background-color: #333; /* Dark grey background */
-}
-
 .message {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
   word-break: break-word; /* Ensures text breaks to prevent overflow */
-  max-width: 70%; /* Limit maximum width of messages */
+  background-color: #666; /* Lighter grey for assistant messages */
 }
 
 .message.user {
   background-color: #4caf50; /* Green background for user messages */
-  align-self: flex-end; /* Align user messages to the right */
-}
-
-.message.assistant {
-  background-color: #666; /* Lighter grey for assistant messages */
-  align-self: flex-start; /* Align assistant messages to the left */
 }
 
 /* Message Form Styles */
 #message-form {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: center; /* Vertically center items in the form */
   background-color: #444; /* Slightly lighter grey for form area */
   padding: 10px;
-  align-items: center; /* Vertically center items in the form */
 }
 
 #message-input {
