@@ -178,10 +178,10 @@ function updateWordCount(count) {
 }
 
 function resizeTextarea(textarea) {
-  // Reset height to minimum initially
-  textarea.style.height = '20px';
+  // Set height to 76px initially
+  textarea.style.height = '76px';
   // Adjust height based on scrollHeight
-  textarea.style.height = Math.max(textarea.scrollHeight, 20) + 'px';
+  textarea.style.height = Math.max(textarea.scrollHeight, 76) + 'px';
 }
 
 // Initialize textarea with correct height

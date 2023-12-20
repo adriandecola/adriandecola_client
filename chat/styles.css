@@ -97,7 +97,7 @@ body {
   background-color: #333; /* Dark grey background */
   color: #fff; /* White text */
   resize: none; /* Prevent manual resize */
-  min-height: 20px; /* Minimum height for one line */
+  min-height: 76px; /* Set minimum height to 76px */
   font-size: 1.2em; /* Bigger text in textarea */
 }
 
