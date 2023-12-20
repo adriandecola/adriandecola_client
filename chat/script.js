@@ -58,7 +58,10 @@ function displayMessage(message, role) {
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message', role);
-  messageDiv.innerHTML = `<span class="content">${message}</span>`;
+
+  // Replace newline characters with HTML line breaks for display
+  const formattedMessage = message.replace(/\n/g, '<br>');
+  messageDiv.innerHTML = `<span class="content">${formattedMessage}</span>`;
 
   messageWrapper.appendChild(messageDiv);
   messagesContainer.appendChild(messageWrapper);
