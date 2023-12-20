@@ -134,12 +134,12 @@ button:hover {
 @media (max-width: 768px) {
   #chat-container {
     height: calc(
-      100vh - 100px
+      100vh - 60px
     ); /* Reduce the height to account for additional padding */
   }
 
   #message-form {
-    padding-bottom: 100px; /* Add padding at the bottom of the message form */
+    padding-bottom: 60px; /* Add padding at the bottom of the message form */
   }
 
   /* Additional mobile-specific adjustments can be added here if needed */
