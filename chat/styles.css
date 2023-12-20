@@ -129,3 +129,13 @@ button:hover {
   background: #555; /* Scrollbar thumb */
   border-radius: 4px;
 }
+
+/* Add a media query for mobile devices */
+@media (max-width: 768px) {
+  /* Adjust the padding or margin at the bottom of the chat container */
+  #chat-container {
+    padding-bottom: 60px; /* Adjust this value as needed */
+  }
+
+  /* Additional mobile-specific adjustments can be added here if needed */
+}
