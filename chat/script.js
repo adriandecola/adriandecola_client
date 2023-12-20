@@ -37,11 +37,12 @@ function sendMessageFromInput() {
 
 function updateTextarea() {
   const messageInput = document.getElementById('message-input');
-  const wordCount = messageInput.value.split(/\s+/).filter(Boolean).length;
-  document.getElementById('word-count').textContent = `${Math.min(
-    wordCount,
-    120
-  )}/120`;
+  let words = messageInput.value.split(/\s+/).filter(Boolean);
+  if (words.length > 120) {
+    words = words.slice(0, 120);
+    messageInput.value = words.join(' ');
+  }
+  document.getElementById('word-count').textContent = `${words.length}/120`;
 
   messageInput.style.height = 'auto';
   messageInput.style.height = messageInput.scrollHeight + 'px';

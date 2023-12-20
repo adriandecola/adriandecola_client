@@ -76,6 +76,7 @@ body {
   align-items: flex-start; /* Align items to the top */
   background-color: #444; /* Slightly lighter grey for form area */
   padding: 10px;
+  align-items: center; /* Vertically center items in the form */
 }
 
 #message-input {
@@ -87,12 +88,14 @@ body {
   color: #fff; /* White text */
   resize: none; /* Prevent manual resize */
   min-height: 20px; /* Minimum height for one line */
+  font-size: 1.2em; /* Bigger text in textarea */
 }
 
 #word-count {
   color: #aaa; /* Light grey for word count */
   margin: 0 10px; /* Added margin for spacing */
   align-self: center;
+  margin-bottom: 10px; /* Adjust as needed for better alignment */
 }
 
 button {
