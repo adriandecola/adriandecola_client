@@ -160,6 +160,11 @@ function updateWordCount(count) {
 }
 
 function resizeTextarea(textarea) {
-  textarea.style.height = 'auto';
-  textarea.style.height = textarea.scrollHeight + 'px';
+  // Reset height to minimum initially
+  textarea.style.height = '20px';
+  // Adjust height based on scrollHeight
+  textarea.style.height = Math.max(textarea.scrollHeight, 20) + 'px';
 }
+
+// Initialize textarea with correct height
+resizeTextarea(document.getElementById('message-input'));

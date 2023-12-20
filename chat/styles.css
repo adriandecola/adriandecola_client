@@ -54,7 +54,11 @@ body {
 }
 
 .message-wrapper {
-  max-width: 70%; /* Limit maximum width of messages */
+  max-width: 55%; /* Limit maximum width of messages */
+}
+
+.message .content {
+  font-size: 1.2em; /* Match font size */
 }
 
 .message-wrapper.user {
@@ -122,6 +126,6 @@ button:hover {
 }
 
 #messages::-webkit-scrollbar-thumb {
-  background: #4caf50; /* Green scrollbar thumb */
+  background: #555; /* Scrollbar thumb */
   border-radius: 4px;
 }
