@@ -46,6 +46,23 @@ body {
 }
 
 /* Messages Area Styles */
+.message-wrapper {
+  max-width: 70%; /* Limit maximum width of messages */
+}
+
+.message-wrapper.user {
+  margin-left: auto; /* Push user messages to the right */
+}
+
+.message-wrapper.assistant {
+  margin-right: auto; /* Keep assistant messages to the left */
+}
+
+.message.user {
+  background-color: #4caf50; /* Green background for user messages */
+}
+
+/* Messages Area Styles */
 #messages {
   flex-grow: 1;
   overflow-y: auto;
