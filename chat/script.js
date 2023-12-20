@@ -32,6 +32,9 @@ function sendMessageFromInput() {
 
     messageInput.value = '';
     updateTextarea();
+
+    // Blur the textarea to hide the mobile keyboard
+    messageInput.blur();
   }
 }
 
