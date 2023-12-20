@@ -175,6 +175,6 @@ function updateWordCount(count) {
 }
 
 function resizeTextarea(textarea) {
-  textarea.style.height = '60px'; // Set initial height
+  textarea.style.height = '30px'; // Set initial height
   textarea.style.height = Math.max(textarea.scrollHeight, 30) + 'px'; // Adjust if needed
 }
