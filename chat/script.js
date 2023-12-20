@@ -49,15 +49,18 @@ function updateTextarea() {
 }
 
 function displayMessage(message, role) {
+  console.log('Displaying message:', message, 'Role:', role);
   const messagesContainer = document.getElementById('messages');
-  const messageWrapper = document.createElement('div'); // Create a wrapper
-  messageWrapper.classList.add('message-wrapper', role); // Add classes
+
+  // Create a wrapper for alignment
+  const messageWrapper = document.createElement('div');
+  messageWrapper.classList.add('message-wrapper', role);
 
   const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message');
+  messageDiv.classList.add('message', role);
   messageDiv.innerHTML = `<span class="content">${message}</span>`;
 
-  messageWrapper.appendChild(messageDiv); // Add the message to the wrapper
+  messageWrapper.appendChild(messageDiv);
   messagesContainer.appendChild(messageWrapper);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
