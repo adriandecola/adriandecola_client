@@ -38,14 +38,16 @@ function sendMessageFromInput() {
 function updateTextarea() {
   const messageInput = document.getElementById('message-input');
   let words = messageInput.value.split(/\s+/).filter(Boolean);
+
   if (words.length > 120) {
     words = words.slice(0, 120);
     messageInput.value = words.join(' ');
   }
+
   document.getElementById('word-count').textContent = `${words.length}/120`;
 
-  messageInput.style.height = 'auto';
-  messageInput.style.height = messageInput.scrollHeight + 'px';
+  // Reset and then adjust the height of the textarea
+  resizeTextarea(messageInput);
 }
 
 function displayMessage(message, role) {
@@ -173,11 +175,6 @@ function updateWordCount(count) {
 }
 
 function resizeTextarea(textarea) {
-  // Set height to 76px initially
-  textarea.style.height = '76px';
-  // Adjust height based on scrollHeight
-  textarea.style.height = Math.max(textarea.scrollHeight, 76) + 'px';
+  textarea.style.height = '40px'; // Set initial height
+  textarea.style.height = Math.max(textarea.scrollHeight, 40) + 'px'; // Adjust if needed
 }
-
-// Initialize textarea with correct height
-resizeTextarea(document.getElementById('message-input'));
