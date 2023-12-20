@@ -129,30 +129,25 @@ async function readStream(reader) {
 }
 
 function updateAssistantMessage(message) {
+  // Check if the currentAssistantMessageDiv is already created
   if (!currentAssistantMessageDiv) {
-    // If no current message div exists, create a new one
+    // Create a new message div for streaming content
     currentAssistantMessageDiv = createMessageDiv('assistant');
+
+    // Wrap the message div in a message-wrapper for alignment
+    const messageWrapper = document.createElement('div');
+    messageWrapper.classList.add('message-wrapper', 'assistant');
+    messageWrapper.appendChild(currentAssistantMessageDiv);
+
+    // Append the wrapper to the messages container
+    const messagesContainer = document.getElementById('messages');
+    messagesContainer.appendChild(messageWrapper);
   }
 
   // Replace newline characters with HTML line breaks
   const formattedMessage = message.replace(/\n/g, '<br>');
   currentAssistantMessageDiv.querySelector('.content').innerHTML =
     formattedMessage;
-
-  // Ensure the message div is wrapped in a message-wrapper for proper alignment
-  if (
-    !currentAssistantMessageDiv.parentElement.classList.contains(
-      'message-wrapper'
-    )
-  ) {
-    const messageWrapper = document.createElement('div');
-    messageWrapper.classList.add('message-wrapper', 'assistant');
-
-    // Move the message div to the wrapper
-    messageWrapper.appendChild(currentAssistantMessageDiv);
-    const messagesContainer = document.getElementById('messages');
-    messagesContainer.appendChild(messageWrapper);
-  }
 }
 
 function createMessageDiv(role) {
