@@ -130,22 +130,37 @@ async function readStream(reader) {
 
 function updateAssistantMessage(message) {
   if (!currentAssistantMessageDiv) {
+    // If no current message div exists, create a new one
     currentAssistantMessageDiv = createMessageDiv('assistant');
   }
+
   // Replace newline characters with HTML line breaks
   const formattedMessage = message.replace(/\n/g, '<br>');
-
   currentAssistantMessageDiv.querySelector('.content').innerHTML =
     formattedMessage;
+
+  // Ensure the message div is wrapped in a message-wrapper for proper alignment
+  if (
+    !currentAssistantMessageDiv.parentElement.classList.contains(
+      'message-wrapper'
+    )
+  ) {
+    const messageWrapper = document.createElement('div');
+    messageWrapper.classList.add('message-wrapper', 'assistant');
+
+    // Move the message div to the wrapper
+    messageWrapper.appendChild(currentAssistantMessageDiv);
+    const messagesContainer = document.getElementById('messages');
+    messagesContainer.appendChild(messageWrapper);
+  }
 }
 
 function createMessageDiv(role) {
-  const messagesContainer = document.getElementById('messages');
+  // Create the message div
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message', role);
   messageDiv.innerHTML = '<span class="content"></span>';
-  messagesContainer.appendChild(messageDiv);
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
   return messageDiv;
 }
 
