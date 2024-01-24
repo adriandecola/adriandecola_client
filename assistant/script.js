@@ -102,7 +102,7 @@ function displayLoadingMessage() {
 
   const loadingDiv = document.createElement('div');
   loadingDiv.classList.add('message', 'assistant');
-  loadingDiv.innerHTML = '<span class="content"></span>'; // Initial empty message
+  loadingDiv.innerHTML = '<span class="content">...</span>'; // Initial "..." message
 
   loadingWrapper.appendChild(loadingDiv);
   messagesContainer.appendChild(loadingWrapper);
