@@ -102,11 +102,25 @@ function displayLoadingMessage() {
 
   const loadingDiv = document.createElement('div');
   loadingDiv.classList.add('message', 'assistant');
-  loadingDiv.innerHTML = '<span class="content">...</span>'; // Initial loading message
+  loadingDiv.innerHTML = '<span class="content"></span>'; // Initial empty message
 
   loadingWrapper.appendChild(loadingDiv);
   messagesContainer.appendChild(loadingWrapper);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  // Add ellipses over time
+  let ellipses = '';
+  const maxEllipses = 3;
+  const ellipsisInterval = setInterval(() => {
+    ellipses += '.';
+    if (ellipses.length > maxEllipses) ellipses = '.';
+    loadingDiv.querySelector('.content').innerHTML = ellipses;
+
+    // Check if the loading message still exists, clear interval if it's removed
+    if (!document.getElementById(loadingWrapper.id)) {
+      clearInterval(ellipsisInterval);
+    }
+  }, 500); // Adjust the interval time as needed
 
   return loadingWrapper.id;
 }
