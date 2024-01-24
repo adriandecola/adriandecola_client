@@ -128,10 +128,14 @@ function displayLoadingMessage() {
 function updateLoadingMessage(loadingMessageId, newMessage) {
   const loadingMessage = document.getElementById(loadingMessageId);
   if (loadingMessage) {
+    // Clear any existing interval to stop the ellipsis animation
+    clearInterval(loadingMessage.ellipsisInterval);
+
+    // Update the message content
     loadingMessage.querySelector('.content').innerHTML = newMessage.replace(
       /\n/g,
       '<br>'
-    ); // Replace the ellipses with the actual message
+    );
   }
 }
 
