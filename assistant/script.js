@@ -122,16 +122,15 @@ function displayLoadingMessage() {
     }
   }, 500); // Adjust the interval time as needed
 
+  loadingWrapper.ellipsisInterval = ellipsisInterval;
+
   return loadingWrapper.id;
 }
 
 function updateLoadingMessage(loadingMessageId, newMessage) {
   const loadingMessage = document.getElementById(loadingMessageId);
   if (loadingMessage) {
-    // Clear any existing interval to stop the ellipsis animation
     clearInterval(loadingMessage.ellipsisInterval);
-
-    // Update the message content
     loadingMessage.querySelector('.content').innerHTML = newMessage.replace(
       /\n/g,
       '<br>'
@@ -142,6 +141,7 @@ function updateLoadingMessage(loadingMessageId, newMessage) {
 function removeLoadingMessage(loadingMessageId) {
   const loadingMessage = document.getElementById(loadingMessageId);
   if (loadingMessage) {
+    clearInterval(loadingMessage.ellipsisInterval);
     loadingMessage.remove();
   }
 }
