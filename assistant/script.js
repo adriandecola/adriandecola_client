@@ -72,6 +72,8 @@ function displayMessage(message, role) {
 }
 
 async function sendMessage(userMessage) {
+  const loadingMessageId = displayLoadingMessage(); // Display loading message
+
   try {
     console.log('Posting to /assistant');
     const response = await fetch('https://api.adriandecola.com/assistant', {
@@ -85,9 +87,44 @@ async function sendMessage(userMessage) {
     });
 
     const responseData = await response.json();
-    displayMessage(responseData.response, 'assistant');
+    updateLoadingMessage(loadingMessageId, responseData.response); // Update the loading message with the response
   } catch (err) {
     console.error('Fetch error:', err);
+    removeLoadingMessage(loadingMessageId); // Remove the loading message in case of error
+  }
+}
+
+function displayLoadingMessage() {
+  const messagesContainer = document.getElementById('messages');
+  const loadingWrapper = document.createElement('div');
+  loadingWrapper.classList.add('message-wrapper', 'assistant');
+  loadingWrapper.id = 'loading-' + new Date().getTime(); // Unique ID for the loading message
+
+  const loadingDiv = document.createElement('div');
+  loadingDiv.classList.add('message', 'assistant');
+  loadingDiv.innerHTML = '<span class="content">...</span>'; // Initial loading message
+
+  loadingWrapper.appendChild(loadingDiv);
+  messagesContainer.appendChild(loadingWrapper);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  return loadingWrapper.id;
+}
+
+function updateLoadingMessage(loadingMessageId, newMessage) {
+  const loadingMessage = document.getElementById(loadingMessageId);
+  if (loadingMessage) {
+    loadingMessage.querySelector('.content').innerHTML = newMessage.replace(
+      /\n/g,
+      '<br>'
+    ); // Replace the ellipses with the actual message
+  }
+}
+
+function removeLoadingMessage(loadingMessageId) {
+  const loadingMessage = document.getElementById(loadingMessageId);
+  if (loadingMessage) {
+    loadingMessage.remove();
   }
 }
 
