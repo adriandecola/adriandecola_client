@@ -1,4 +1,7 @@
 // assistant/script.js
+
+let currentThreadId = null;
+
 document
   .getElementById('message-form')
   .addEventListener('submit', function (event) {
@@ -83,10 +86,12 @@ async function sendMessage(userMessage) {
       },
       body: JSON.stringify({
         message: userMessage,
+        threadId: currentThreadId, // Pass the currentThreadId
       }),
     });
 
     const responseData = await response.json();
+    currentThreadId = responseData.threadId; // Update the currentThreadId (if one was created)
     updateLoadingMessage(loadingMessageId, responseData.response); // Update the loading message with the response
   } catch (err) {
     console.error('Fetch error:', err);
