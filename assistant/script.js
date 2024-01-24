@@ -1,6 +1,4 @@
 // assistant/script.js
-let messageHistory = [];
-
 document
   .getElementById('message-form')
   .addEventListener('submit', function (event) {
@@ -75,7 +73,7 @@ function displayMessage(message, role) {
 
 async function sendMessage(userMessage) {
   try {
-    console.log('Posting to /chat');
+    console.log('Posting to /assistant');
     const response = await fetch('https://api.adriandecola.com/assistant', {
       method: 'POST',
       headers: {
@@ -83,98 +81,14 @@ async function sendMessage(userMessage) {
       },
       body: JSON.stringify({
         message: userMessage,
-        messageHistory: messageHistory,
       }),
     });
 
-    const reader = response.body.getReader();
-    readStream(reader);
+    const responseData = await response.json();
+    displayMessage(responseData.response, 'assistant');
   } catch (err) {
     console.error('Fetch error:', err);
   }
-}
-
-let currentAssistantMessageDiv = null; // Reference to the current assistant message element
-
-async function readStream(reader) {
-  try {
-    let done, value;
-    let accumulatedMessage = ''; // To accumulate the message content
-
-    while ((({ done, value } = await reader.read()), !done)) {
-      const chunk = new TextDecoder().decode(value);
-      console.log('Received chunk:', chunk);
-
-      const lines = chunk.split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data:')) {
-          try {
-            const data = JSON.parse(line.slice(5)); // Remove 'data:' prefix
-            console.log('Parsed data:', data);
-
-            if (data.completeHistory) {
-              messageHistory = data.completeHistory;
-              console.log('Updating complete history:', messageHistory);
-              displayCompleteHistory();
-              currentAssistantMessageDiv = null; // Reset after displaying history
-            } else if (data.message) {
-              accumulatedMessage += data.message; // Accumulate the message content
-              updateAssistantMessage(accumulatedMessage);
-            }
-          } catch (parseError) {
-            console.error('Error parsing line:', parseError);
-          }
-        }
-      }
-    }
-    console.log('Stream reading completed');
-  } catch (err) {
-    console.error('Stream reading error:', err);
-  }
-}
-
-function updateAssistantMessage(message) {
-  // Check if the currentAssistantMessageDiv is already created
-  if (!currentAssistantMessageDiv) {
-    // Create a new message div for streaming content
-    currentAssistantMessageDiv = createMessageDiv('assistant');
-
-    // Wrap the message div in a message-wrapper for alignment
-    const messageWrapper = document.createElement('div');
-    messageWrapper.classList.add('message-wrapper', 'assistant');
-    messageWrapper.appendChild(currentAssistantMessageDiv);
-
-    // Append the wrapper to the messages container
-    const messagesContainer = document.getElementById('messages');
-    messagesContainer.appendChild(messageWrapper);
-  }
-
-  // Replace newline characters with HTML line breaks
-  const formattedMessage = message.replace(/\n/g, '<br>');
-  currentAssistantMessageDiv.querySelector('.content').innerHTML =
-    formattedMessage;
-}
-
-function createMessageDiv(role) {
-  // Create the message div
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message', role);
-  messageDiv.innerHTML = '<span class="content"></span>';
-
-  return messageDiv;
-}
-
-function displayCompleteHistory() {
-  console.log('Displaying complete history:', messageHistory);
-  const messagesContainer = document.getElementById('messages');
-  messagesContainer.innerHTML = '';
-  messageHistory.forEach((msg) => {
-    displayMessage(msg.content, msg.role);
-  });
-}
-
-function updateWordCount(count) {
-  document.getElementById('word-count').textContent = `${count}/120`;
 }
 
 function resizeTextarea(textarea) {
