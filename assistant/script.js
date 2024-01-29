@@ -89,10 +89,19 @@ async function sendMessage(userMessage) {
         threadId: currentThreadId, // Pass the currentThreadId
       }),
     });
-
+    // Getting response data in JSON format
     const responseData = await response.json();
-    currentThreadId = responseData.threadId; // Update the currentThreadId (if one was created)
-    updateLoadingMessage(loadingMessageId, responseData.response); // Update the loading message with the response
+
+    // Update the currentThreadId (if one was created)
+    currentThreadId = responseData.threadId;
+
+    if (responseData.formData) {
+      // If the form was filled, update the company details
+      updateCompanyDetails(responseData.formData);
+    }
+
+    // Update the loading message with the response
+    updateLoadingMessage(loadingMessageId, responseData.response);
   } catch (err) {
     console.error('Fetch error:', err);
     removeLoadingMessage(loadingMessageId); // Remove the loading message in case of error
@@ -154,4 +163,12 @@ function removeLoadingMessage(loadingMessageId) {
 function resizeTextarea(textarea) {
   textarea.style.height = '30px'; // Set initial height
   textarea.style.height = Math.max(textarea.scrollHeight - 20, 30) + 'px'; // Adjust if needed
+}
+
+function updateCompanyDetails(formData) {
+  const { companyName, numEmployees } = formData;
+
+  // Update the HTML elements with the received data
+  document.getElementById('company-name').value = companyName || '';
+  document.getElementById('number-employees').value = numEmployees || '';
 }

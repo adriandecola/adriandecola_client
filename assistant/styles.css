@@ -18,16 +18,11 @@ html {
   overflow: hidden; /* Prevent scrolling on the body */
 }
 
-#chat-container {
-  max-height: 100%; /* Ensure chat container doesn't exceed viewport height */
-  overflow: auto; /* Allow scrolling within the chat container only */
-}
-
 /* Chat Container Styles */
 #chat-container {
   width: 100%;
   height: 100vh;
-  background-color: #444; /* Slightly lighter grey for chat container */
+  background-color: #444;
   border-radius: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -35,33 +30,52 @@ html {
   flex-direction: column;
 }
 
+/* Content Area Styles */
+#content-area {
+  display: flex;
+  flex: 1; /* This will make content-area flexible */
+  min-height: 0; /* Fix for flexbox overflow issue */
+}
+
 /* Chat Header Styles */
 #chat-header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  background-color: #333; /* Dark grey background */
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  padding: 20px; /* Add more padding as needed */
+  width: 100%; /* Ensure full width */
+  text-align: center; /* Center the text if it's not in a flex container */
 }
 
 #chat-icon {
-  width: 100px;
-  height: 100px;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
   border-radius: 50%;
+  margin-right: 10px; /* Space after the icon */
 }
 
 #chat-title {
   color: #4caf50; /* Green text */
-  font-size: 1.5em;
-  margin-top: 5px;
+  font-size: 1.3em; /* Adjust the font size as needed */
+  margin-top: 10px; /* Add space between the logo and the title */
 }
 
 /* Messages Area Styles */
 #messages {
-  flex-grow: 1;
+  flex-grow: 2;
   overflow-y: auto;
-  padding: 20px;
-  background-color: #333; /* Dark grey background */
+  padding: 0px;
+  background-color: #333;
+  width: 66.66%;
+  margin-right: 5px;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+#messages {
+  width: 66.66%; /* 2/3 of the width */
+  overflow-y: auto; /* Allow scrolling */
+  margin-right: 5px; /* Padding between messages and company details */
 }
 
 .message-wrapper {
@@ -86,18 +100,58 @@ html {
   border-radius: 10px;
   word-break: break-word; /* Ensures text breaks to prevent overflow */
   background-color: #666; /* Lighter grey for assistant messages */
+  color: #fff; /* Keep text color white */
+  font-size: 0.9em; /* Smaller font size for messages */
 }
 
 .message.user {
   background-color: #4caf50; /* Green background for user messages */
 }
 
+/* Company Details Styles */
+#company-details {
+  width: 33.33%; /* 1/3 of the width */
+  padding: 20px; /* Increase padding inside the company details */
+  box-sizing: border-box; /* Include padding in width calculation */
+  background-color: #333; /* Dark grey background */
+  flex-grow: 1; /* Keeps the 1/3 width ratio */
+  padding: 10px;
+  margin-left: 10px; /* Padding between messages and company details */
+}
+
+#company-details label {
+  display: block; /* Ensure the label takes up the full width */
+  margin-bottom: 15px; /* Increase space between label and input */
+  color: #fff; /* White text for the label */
+  font-size: 1em; /* Match font size to the input text */
+  font-family: 'Press Start 2P', cursive; /* Ensure font family matches the rest of the body */
+}
+
+#company-details input[type='text'],
+#company-details input[type='number'] {
+  width: calc(100% - 20px); /* Adjust width to include padding */
+  padding: 10px;
+  margin-bottom: 20px; /* Increase space between inputs */
+  border: none; /* Remove border */
+  background-color: #444; /* Dark grey background */
+  color: #4caf50; /* Green text for inputs */
+  font-family: 'Press Start 2P', cursive; /* Same font family as the labels */
+  font-size: 1em; /* Match font size to the labels */
+}
+
+#company-details input[type='text']:focus,
+#company-details input[type='number']:focus {
+  outline: none;
+  border-color: #4caf50; /* Highlight with green border when focused */
+}
+
 /* Message Form Styles */
 #message-form {
   display: flex;
-  align-items: center; /* Vertically center items in the form */
-  background-color: #444; /* Slightly lighter grey for form area */
-  padding: 10px;
+  align-items: center;
+  background-color: #444;
+  padding: 10px; /* Increased padding to 10px, adjust if needed */
+  margin-top: auto; /* Push the form to the bottom */
 }
 
 #message-input {
@@ -141,7 +195,18 @@ button:hover {
   border-radius: 4px;
 }
 
-/* Add a media query for mobile devices */
+/* Remove arrows from number input */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
   #chat-container {
     height: calc(
@@ -154,47 +219,4 @@ button:hover {
   }
 
   /* Additional mobile-specific adjustments can be added here if needed */
-}
-
-/* styles to combine new company details and message sections*/
-#content-area {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  flex-grow: 1;
-}
-
-#messages {
-  flex-grow: 2; /* Allows the message area to take up twice the space of company details */
-}
-
-/* styles for company details div */
-#company-details {
-  flex-grow: 1; /* Allows the company details to take up available space */
-  background-color: #333; /* Dark grey background */
-  padding: 10px;
-  margin-bottom: 15px; /* Space before the message input */
-  border-radius: 5px; /* Rounded corners for the div */
-}
-
-#company-details label {
-  display: block; /* Make each label block-level for better structure */
-  margin: 5px 0; /* Spacing between label and input */
-}
-
-#company-details input[type='text'],
-#company-details input[type='number'] {
-  width: calc(100%); /* Adjust width to account for padding */
-  padding: 5px;
-  margin-bottom: 10px; /* Spacing between inputs */
-  border-radius: 5px;
-  border: 1px solid #aaa; /* Style the input border */
-  background-color: #444; /* Slightly lighter grey for inputs */
-  color: #fff; /* White text */
-}
-
-#company-details input[type='text']:focus,
-#company-details input[type='number']:focus {
-  outline: none;
-  border-color: #4caf50; /* Highlight with green border when focused */
 }
