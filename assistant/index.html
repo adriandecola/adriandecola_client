@@ -11,19 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="chat-container"> <!--  Really the whole main field container -->
+    <div id="chat-container"> 
         <div id="chat-header">
             <img src="images/carbon_chatter_icon.png" alt="Meta Carbon's Footprint Calculator Icon" id="chat-icon">
             <div id="chat-title">Meta Carbon's Footprint Calculator</div>
         </div>
-        <div id="messages"></div>
-        <div id="company-details">
-            <label for="company-name">Company Name:</label>
-            <input type="text" id="company-name" name="company_name" >
+        <div id="content-area">
+            <div id="messages"></div>
+            <div id="company-details">
+                <label for="company-name">Company Name:</label>
+                <input type="text" id="company-name" name="company_name" >
 
-            <label for="number-employees">Number of Employees:</label>
-            <input type="number" id="number-employees" name="number_employees" >
-
+                <label for="number-employees">Number of Employees:</label>
+                <input type="number" id="number-employees" name="number_employees" >
+            </div>
         </div>
         <form id="message-form">
             <textarea id="message-input" placeholder="Type your message here..." ></textarea>

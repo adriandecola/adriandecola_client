@@ -156,8 +156,21 @@ button:hover {
   /* Additional mobile-specific adjustments can be added here if needed */
 }
 
+/* styles to combine new company details and message sections*/
+#content-area {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  flex-grow: 1;
+}
+
+#messages {
+  flex-grow: 2; /* Allows the message area to take up twice the space of company details */
+}
+
 /* styles for company details div */
 #company-details {
+  flex-grow: 1; /* Allows the company details to take up available space */
   background-color: #333; /* Dark grey background */
   padding: 10px;
   margin-bottom: 15px; /* Space before the message input */
@@ -171,7 +184,7 @@ button:hover {
 
 #company-details input[type='text'],
 #company-details input[type='number'] {
-  width: calc(100% - 20px); /* Adjust width to account for padding */
+  width: calc(100%); /* Adjust width to account for padding */
   padding: 5px;
   margin-bottom: 10px; /* Spacing between inputs */
   border-radius: 5px;
