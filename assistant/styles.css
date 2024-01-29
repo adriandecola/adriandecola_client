@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Press Start 2P', system-ui;
   margin: 0;
   padding: 0;
   background-color: #333; /* Dark grey background */
@@ -69,7 +69,7 @@ html {
 }
 
 .message .content {
-  font-size: 1.2em; /* Match font size */
+  font-size: 1em; /* Match font size */
 }
 
 .message-wrapper.user {
@@ -109,7 +109,7 @@ html {
   color: #fff; /* White text */
   resize: none; /* Prevent manual resize */
   min-height: 50px; /* Set minimum height to 60px */
-  font-size: 1.2em; /* Bigger text in textarea */
+  font-size: 1em; /* Bigger text in textarea */
 }
 
 #word-count {
@@ -154,4 +154,34 @@ button:hover {
   }
 
   /* Additional mobile-specific adjustments can be added here if needed */
+}
+
+/* styles for company details div */
+#company-details {
+  background-color: #333; /* Dark grey background */
+  padding: 10px;
+  margin-bottom: 15px; /* Space before the message input */
+  border-radius: 5px; /* Rounded corners for the div */
+}
+
+#company-details label {
+  display: block; /* Make each label block-level for better structure */
+  margin: 5px 0; /* Spacing between label and input */
+}
+
+#company-details input[type='text'],
+#company-details input[type='number'] {
+  width: calc(100% - 20px); /* Adjust width to account for padding */
+  padding: 5px;
+  margin-bottom: 10px; /* Spacing between inputs */
+  border-radius: 5px;
+  border: 1px solid #aaa; /* Style the input border */
+  background-color: #444; /* Slightly lighter grey for inputs */
+  color: #fff; /* White text */
+}
+
+#company-details input[type='text']:focus,
+#company-details input[type='number']:focus {
+  outline: none;
+  border-color: #4caf50; /* Highlight with green border when focused */
 }
