@@ -102,6 +102,7 @@ html {
   background-color: #666; /* Lighter grey for assistant messages */
   color: #fff; /* Keep text color white */
   font-size: 0.9em; /* Smaller font size for messages */
+  font-family: 'Roboto', sans-serif; /* I think this font will look better */
 }
 
 .message.user {
@@ -136,7 +137,7 @@ html {
   background-color: #444; /* Dark grey background */
   color: #4caf50; /* Green text for inputs */
   font-family: 'Press Start 2P', cursive; /* Same font family as the labels */
-  font-size: 1em; /* Match font size to the labels */
+  font-size: 0.8em; /* Match font size to the labels */
 }
 
 #company-details input[type='text']:focus,
