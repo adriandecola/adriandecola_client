@@ -165,10 +165,79 @@ function resizeTextarea(textarea) {
   textarea.style.height = Math.max(textarea.scrollHeight - 20, 30) + 'px'; // Adjust if needed
 }
 
-function updateCompanyDetails(formData) {
-  const { companyName, numEmployees } = formData;
+//////////////////////////////// Travel Details JS ////////////////////////////////
+document.getElementById('passengers').addEventListener('focus', function () {
+  this.parentNode.classList.add('focused');
+});
 
-  // Update the HTML elements with the received data
-  document.getElementById('company-name').value = companyName || '';
-  document.getElementById('number-employees').value = numEmployees || '';
+document.getElementById('passengers').addEventListener('blur', function () {
+  this.parentNode.classList.remove('focused');
+});
+
+function incrementValue() {
+  var value = parseInt(document.getElementById('passengers').value, 10);
+  value = isNaN(value) ? 1 : value;
+  value++;
+  document.getElementById('passengers').value = value;
 }
+
+function decrementValue() {
+  var value = parseInt(document.getElementById('passengers').value, 10);
+  value = isNaN(value) ? 1 : value;
+  value < 2 ? (value = 1) : value--;
+  document.getElementById('passengers').value = value;
+}
+
+// For the passanger input field's input
+document.getElementById('passengers').addEventListener('blur', function (e) {
+  if (e.target.value === '0' || e.target.value === '') {
+    e.target.value = '1';
+  }
+});
+document.getElementById('passengers').addEventListener('input', function (e) {
+  const cursorPosition = e.target.selectionStart - 1;
+  const originalValue = e.target.value;
+  const newValue = originalValue.replace(/\D+/g, '');
+
+  if (newValue !== originalValue) {
+    e.target.value = newValue;
+    e.target.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
+  if (e.target.value === '0' || e.target.value === '') {
+    return;
+  }
+
+  if (e.target.value.length > 1 && e.target.value.startsWith('0')) {
+    e.target.value = e.target.value.substring(1);
+  }
+});
+
+//////// For flight class selection /////////
+// Function to set the selected class and close the dropdown
+function chooseClass(selectedClass) {
+  document.getElementById('selected-class').textContent = selectedClass;
+  document.getElementById('class-options').style.display = 'none';
+}
+
+// Event listener to open/close the dropdown
+document
+  .getElementById('selected-class')
+  .addEventListener('click', function (event) {
+    var dropdownContent = document.getElementById('class-options');
+    if (dropdownContent.style.display === 'block') {
+      dropdownContent.style.display = 'none';
+    } else {
+      dropdownContent.style.display = 'block';
+    }
+    // Prevent the event from bubbling up to the document
+    event.stopPropagation();
+  });
+
+// Event listener to close the dropdown if clicked outside
+document.addEventListener('click', function (event) {
+  var dropdownContent = document.getElementById('class-options');
+  if (event.target.id !== 'selected-class') {
+    dropdownContent.style.display = 'none';
+  }
+});

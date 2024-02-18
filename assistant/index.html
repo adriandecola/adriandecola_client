@@ -8,26 +8,92 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div id="chat-container"> 
+    <div id="chat-container">
+
+        <!-- Top Large Message and Travel Details Container-->
         <div id="content-area">
+
+            <!-- Left Messages Panel -->
             <div id="messages">
                 <div id="chat-header">
-                    <img src="images/carbon_chatter_icon.png" alt="Meta Carbon's Footprint Calculator Icon" id="chat-icon">
+                    <img src="images/meta-carbon-logo.png" alt="Meta Carbon's Footprint Calculator Icon" id="chat-icon">
                     <div id="chat-title">Meta Carbon's Footprint Calculator</div>
                 </div>
                 <!-- The rest of your messages will go here -->
             </div>
-            <div id="company-details">
-                <label for="company-name">Company Name:</label>
-                <input type="text" id="company-name" name="company_name" >
 
-                <label for="number-employees">Number of Employees:</label>
-                <input type="number" id="number-employees" name="number_employees" >
+            <!-- Right Travel Details Panel -->
+            <!-- This is a flex container -->
+            <div id="travel-details-container">
+                <!-- Flight Icon -->
+                <div id="flight-icon">
+                    <img src="./images/Flight.png" alt="Flight Icon" id="icon-placeholder"> 
+                </div>
+                <!-- Large, first header -->
+                <div id="header-content">
+                    Calculate your travel footprint <!-- Header text -->
+                </div>
+                <!-- Airports header -->
+                <div id="airports-header">
+                    Airports
+                </div>
+                <!-- Travel type selection -->
+                <div id="travel-type" class="flex-container">
+                    <label class="radio-option">
+                    <input type="radio" name="travel" value="return" id="return" checked>
+                    <span class="custom-radio"></span>
+                    Return
+                    </label>
+                    <label class="radio-option">
+                    <input type="radio" name="travel" value="one-way" id="one-way">
+                    <span class="custom-radio"></span>
+                    One way
+                    </label>
+                </div>
+                <!-- Line break here -->
+                <div class="line-break"></div>
+                <!-- From Airport input field -->
+                <div class="input-container">
+                    <label for="from-airport">From</label>
+                    <input type="text" id="from-airport" placeholder="Initial airport">
+                </div>
+                <!-- To Airport input field -->
+                <div class="input-container">
+                    <label for="to-airport">To</label>
+                    <input type="text" id="to-airport" placeholder="Destination airport">
+                </div>
+                <!-- Passengers input field -->
+                <div class="input-container">
+                    <label for="passengers">Passengers</label>
+                    <div class="number-input-container">
+                        <input type="number" id="passengers" name="passengers" value="1" min="1">
+                        <div class="button-container">
+                            <button type="button" onclick="decrementValue()" class="minus"></button>
+                            <button type="button" onclick="incrementValue()" class="plus">+</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Flight Class input field -->
+                <div class="input-container">
+                    <label for="class">Class</label>
+                    <div class="class-input-dropdown">
+                        <button class="dropbtn" id="selected-class">Select Class</button>
+                        <div class="dropdown-content" id="class-options">
+                            <a href="#" onclick="chooseClass('Economy')">Economy</a>
+                            <a href="#" onclick="chooseClass('Premium Economy')">Premium Economy</a>
+                            <a href="#" onclick="chooseClass('Business')">Business</a>
+                            <a href="#" onclick="chooseClass('First Class')">First Class</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Bottom Message Form -->
         <form id="message-form">
             <textarea id="message-input" placeholder="Type your message here..." ></textarea>
             <div id="word-count">0/120</div>
