@@ -124,6 +124,11 @@ html {
   text-align: center; /* center all items in child divs */
 }
 
+/* Additional Styles to push the Submit button to the bottom */
+#travel-details-container .input-container:last-child {
+  margin-top: auto; /* This pushes the button to the bottom */
+}
+
 /* Media query for mobile devices to set width at 50% */
 /* Doesn't seem to work perfectly */
 @media (max-width: 767px) {
@@ -348,12 +353,13 @@ html {
   background-color: transparent;
   flex-grow: 1;
   padding: 0px;
-  border: none;
   -webkit-appearance: none;
   -moz-appearance: textfield;
   text-align: left;
   width: 100%;
   height: 100%;
+  border: 1px solid #e0dce4;
+  border-radius: 0.6rem;
 }
 
 /* Style the button to match the input container style */
@@ -366,6 +372,7 @@ html {
   width: 100%; /* Button should occupy the full width of its parent */
   text-align: left; /* Align text to the left */
   cursor: pointer; /* Change cursor on hover */
+  background-color: transparent;
 }
 
 /* Style the dropdown content to match the overall design */
@@ -373,10 +380,11 @@ html {
   display: none; /* Hide the dropdown content initially */
   position: absolute;
   background-color: #f9f9f9;
-  width: 26%;
+  width: 16.55rem;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 0.6rem; /* Match the border-radius of input containers */
+  text-decoration: none;
 }
 
 /* Style the dropdown links to look like options */
@@ -386,11 +394,29 @@ html {
   text-decoration: none;
   display: block;
   border-bottom: 1px solid #e0dce4; /* Separator for options */
+  font-family: Arial; /* Specific font family */
+  font-size: 1rem; /* Specific font size */
 }
 
 /* Remove border from the last link to match input container style */
 .class-input-dropdown .dropdown-content a:last-child {
   border-bottom: none;
+}
+
+/* Submit button */
+#travel-details-container #submit-button {
+  width: 100%; /* Match the width of input containers */
+  padding: 10px; /* Same padding as input fields for consistent height */
+  border-radius: 0.6rem; /* Match the border radius of input containers */
+  border: none; /* No border for the button */
+  background-color: #24b7a2; /* Green background color */
+  color: white; /* White text color */
+  font-size: 1rem; /* Match the font size of input text */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+#travel-details-container #submit-button:hover {
+  background-color: #28ccb4; /* Slightly lighter green on hover */
 }
 
 /**********************/
@@ -402,8 +428,7 @@ html {
   display: flex;
   align-items: center;
   background-color: #444;
-  padding: 10px; /* Increased padding to 10px, adjust if needed */
-  margin-top: auto; /* Push the form to the bottom */
+  margin: 10px; /* Increased margin to 10px, adjust if needed */
 }
 
 #message-input {

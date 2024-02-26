@@ -241,3 +241,9 @@ document.addEventListener('click', function (event) {
     dropdownContent.style.display = 'none';
   }
 });
+
+// Function called when the submit button is clicked
+function submitFunction() {
+  // Placeholder for future implementation
+  console.log('Submit button clicked');
+}
