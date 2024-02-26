@@ -52,7 +52,7 @@ html {
 }
 
 #chat-icon {
-  width: 15%;
+  width: 100px;
 }
 
 #chat-title {
@@ -115,7 +115,7 @@ html {
 #travel-details-container {
   display: flex;
   flex-direction: column;
-  max-width: 280px; /* Max width for larger screens */
+  max-width: 560px; /* Max width for larger screens */
   padding: 20px;
   border-radius: 1rem 1rem 1rem 1rem;
   background: #fff;
