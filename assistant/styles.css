@@ -446,6 +446,11 @@ html {
   font-size: 1em; /* Bigger text in textarea */
 }
 
+#message-input:focus {
+  border: 2px solid #24b7a2; /* Change the border color to green and set its width */
+  outline: none; /* Optional: Removes the default focus outline */
+}
+
 #word-count {
   color: #aaa; /* Light grey for word count */
   margin: 0 10px; /* Added margin for spacing */

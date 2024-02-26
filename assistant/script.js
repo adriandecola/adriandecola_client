@@ -66,7 +66,16 @@ function displayMessage(message, role) {
   messageDiv.classList.add('message', role);
 
   // Replace newline characters with HTML line breaks for display
-  const formattedMessage = message.replace(/\n/g, '<br>');
+  let formattedMessage = message.replace(/\n/g, '<br>');
+
+  // Markdown to HTML conversion
+  formattedMessage = formattedMessage
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold with double asterisks
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italicize with single asterisks
+    .replace(/_(.*?)_/g, '<em>$1</em>') // Italicize with single underscores
+    .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough with double tildes
+    .replace(/`(.*?)`/g, '<code>$1</code>'); // Monospace with backticks
+
   messageDiv.innerHTML = `<span class="content">${formattedMessage}</span>`;
 
   messageWrapper.appendChild(messageDiv);
@@ -145,10 +154,17 @@ function updateLoadingMessage(loadingMessageId, newMessage) {
   const loadingMessage = document.getElementById(loadingMessageId);
   if (loadingMessage) {
     clearInterval(loadingMessage.ellipsisInterval);
-    loadingMessage.querySelector('.content').innerHTML = newMessage.replace(
-      /\n/g,
-      '<br>'
-    );
+
+    // Markdown to HTML conversion
+    let formattedMessage = newMessage
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold with double asterisks
+      .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italicize with single asterisks
+      .replace(/_(.*?)_/g, '<em>$1</em>') // Italicize with single underscores
+      .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough with double tildes
+      .replace(/`(.*?)`/g, '<code>$1</code>'); // Monospace with backticks
+
+    loadingMessage.querySelector('.content').innerHTML = formattedMessage;
   }
 }
 
