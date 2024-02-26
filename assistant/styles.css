@@ -231,6 +231,7 @@ html {
   padding: 10px;
   border: 1px solid #e0dce4;
   border-radius: 0.6rem;
+  font-size: 0.85rem;
 }
 .input-container input[type='text']::placeholder {
   color: #cac6cd;
@@ -265,6 +266,7 @@ html {
   text-align: left;
   width: 100%;
   height: 100%;
+  font-size: 0.85rem;
 }
 
 #travel-details-container
@@ -373,6 +375,7 @@ html {
   text-align: left; /* Align text to the left */
   cursor: pointer; /* Change cursor on hover */
   background-color: transparent;
+  font-size: 0.85rem;
 }
 
 /* Style the dropdown content to match the overall design */
@@ -395,7 +398,7 @@ html {
   display: block;
   border-bottom: 1px solid #e0dce4; /* Separator for options */
   font-family: Arial; /* Specific font family */
-  font-size: 1rem; /* Specific font size */
+  font-size: 0.85rem; /* Specific font size */
 }
 
 /* Remove border from the last link to match input container style */
