@@ -71,6 +71,7 @@ function updateFormFields(formData) {
   // { travelType, initialAirport, finalAirport, numberOfPassengers, flightClass }
   // Update travel type radio buttons
   console.log('updateFormFields function called');
+  console.log('Form data: ', formData);
 
   if (formData.travelType === 'round trip') {
     document.getElementById('return').checked = true;
