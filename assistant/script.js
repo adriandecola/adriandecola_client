@@ -69,8 +69,9 @@ async function getFormData(userMessage) {
 function updateFormFields(formData) {
   // Assuming formData contains the structure:
   // { travelType, initialAirport, finalAirport, numberOfPassengers, flightClass }
-
   // Update travel type radio buttons
+  console.log('updateFormFields function called');
+
   if (formData.travelType === 'round trip') {
     document.getElementById('return').checked = true;
   } else if (formData.travelType === 'one-way') {
