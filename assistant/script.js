@@ -33,12 +33,79 @@ function sendMessageFromInput() {
     console.log('Sending message:', userMessage);
     displayMessage(userMessage, 'user');
     sendMessage(userMessage);
+    getFormData(userMessage);
 
     messageInput.value = '';
     updateTextArea();
 
     // Blur the textarea to hide the mobile keyboard
     messageInput.blur();
+  }
+}
+
+async function getFormData(userMessage) {
+  try {
+    console.log('Posting to /form');
+    const response = await fetch('https://api.adriandecola.com/form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: userMessage,
+      }),
+    });
+
+    // Getting form data in JSON format
+    const formData = await response.json();
+    console.log('Form Data: ', formData);
+
+    updateFormFields(formData);
+  } catch (err) {
+    console.error('Form fetch error:', err);
+  }
+}
+
+function updateFormFields(formData) {
+  // Assuming formData contains the structure:
+  // { travelType, initialAirport, finalAirport, numberOfPassengers, flightClass }
+
+  // Update travel type radio buttons
+  if (formData.travelType === 'round trip') {
+    document.getElementById('return').checked = true;
+  } else if (formData.travelType === 'one-way') {
+    document.getElementById('one-way').checked = true;
+  }
+
+  // Update initial and final airport fields
+  if (formData.initialAirport && formData.initialAirport !== 'not specified') {
+    document.getElementById('from-airport').value = formData.initialAirport;
+  }
+
+  if (formData.finalAirport && formData.finalAirport !== 'not specified') {
+    document.getElementById('to-airport').value = formData.finalAirport;
+  }
+
+  // Update number of passengers
+  if (
+    formData.numberOfPassengers &&
+    formData.numberOfPassengers !== 'not specified'
+  ) {
+    document.getElementById('passengers').value = formData.numberOfPassengers;
+  }
+
+  // Update flight class
+  if (formData.flightClass && formData.flightClass !== 'not specified') {
+    const classOptions = {
+      economy: 'Economy',
+      'premium economy': 'Premium Economy',
+      business: 'Business',
+      'first class': 'First Class',
+    };
+    const selectedClass = classOptions[formData.flightClass.toLowerCase()];
+    if (selectedClass) {
+      document.getElementById('selected-class').textContent = selectedClass;
+    }
   }
 }
 
