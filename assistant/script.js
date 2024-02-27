@@ -116,63 +116,90 @@ function updateFormFields(formData) {
 */
 
 function updateFormFields(formData) {
-  console.log('updateFormFields function called with formData:', formData);
+  console.log('Raw formData:', formData);
 
-  if (formData.travelType === 'round trip') {
-    document.getElementById('return').checked = true;
-    console.log('Set travel type to round trip');
-  } else if (formData.travelType === 'one-way') {
-    document.getElementById('one-way').checked = true;
-    console.log('Set travel type to one-way');
-  } else {
-    console.log(
-      'No matching travel type found in formData, or missing travelType field'
-    );
-  }
+  // Parse formData from JSON string to Object
+  try {
+    const parsedFormData = JSON.parse(formData);
+    console.log('Parsed formData:', parsedFormData);
 
-  if (formData.initialAirport && formData.initialAirport !== 'not specified') {
-    document.getElementById('from-airport').value = formData.initialAirport;
-    console.log('Set initial airport to:', formData.initialAirport);
-  } else {
-    console.log('Initial airport not specified or missing in formData');
-  }
-
-  if (formData.finalAirport && formData.finalAirport !== 'not specified') {
-    document.getElementById('to-airport').value = formData.finalAirport;
-    console.log('Set final airport to:', formData.finalAirport);
-  } else {
-    console.log('Final airport not specified or missing in formData');
-  }
-
-  if (
-    formData.numberOfPassengers &&
-    formData.numberOfPassengers !== 'not specified'
-  ) {
-    document.getElementById('passengers').value = formData.numberOfPassengers;
-    console.log('Set number of passengers to:', formData.numberOfPassengers);
-  } else {
-    console.log('Number of passengers not specified or missing in formData');
-  }
-
-  if (formData.flightClass && formData.flightClass !== 'not specified') {
-    const classOptions = {
-      economy: 'Economy',
-      'premium economy': 'Premium Economy',
-      business: 'Business',
-      'first class': 'First Class',
-    };
-    const selectedClass = classOptions[formData.flightClass.toLowerCase()];
-    if (selectedClass) {
-      document.getElementById('selected-class').textContent = selectedClass;
-      console.log('Set flight class to:', selectedClass);
+    // Use parsedFormData for your logic
+    if (parsedFormData.travelType === 'round trip') {
+      document.getElementById('return').checked = true;
+      console.log('Set travel type to round trip');
+    } else if (parsedFormData.travelType === 'one-way') {
+      document.getElementById('one-way').checked = true;
+      console.log('Set travel type to one-way');
     } else {
       console.log(
-        'Flight class specified in formData not found in options:',
-        formData.flightClass
+        'No matching travel type found in parsedFormData, or missing travelType field'
       );
     }
-  } else {
-    console.log('Flight class not specified or missing in formData');
+
+    if (
+      parsedFormData.initialAirport &&
+      parsedFormData.initialAirport !== 'not specified'
+    ) {
+      document.getElementById('from-airport').value =
+        parsedFormData.initialAirport;
+      console.log('Set initial airport to:', parsedFormData.initialAirport);
+    } else {
+      console.log('Initial airport not specified or missing in parsedFormData');
+    }
+
+    if (
+      parsedFormData.finalAirport &&
+      parsedFormData.finalAirport !== 'not specified'
+    ) {
+      document.getElementById('to-airport').value = parsedFormData.finalAirport;
+      console.log('Set final airport to:', parsedFormData.finalAirport);
+    } else {
+      console.log('Final airport not specified or missing in parsedFormData');
+    }
+
+    if (
+      parsedFormData.numberOfPassengers &&
+      parsedFormData.numberOfPassengers !== 'not specified'
+    ) {
+      document.getElementById('passengers').value =
+        parsedFormData.numberOfPassengers;
+      console.log(
+        'Set number of passengers to:',
+        parsedFormData.numberOfPassengers
+      );
+    } else {
+      console.log(
+        'Number of passengers not specified or missing in parsedFormData'
+      );
+    }
+
+    if (
+      parsedFormData.flightClass &&
+      parsedFormData.flightClass !== 'not specified'
+    ) {
+      const classOptions = {
+        economy: 'Economy',
+        'premium economy': 'Premium Economy',
+        business: 'Business',
+        'first class': 'First Class',
+      };
+      // Ensure the flight class string is converted to lower case correctly
+      const selectedClass =
+        classOptions[parsedFormData.flightClass.toLowerCase()];
+      if (selectedClass) {
+        document.getElementById('selected-class').textContent = selectedClass;
+        console.log('Set flight class to:', selectedClass);
+      } else {
+        console.log(
+          'Flight class specified in parsedFormData not found in options:',
+          parsedFormData.flightClass
+        );
+      }
+    } else {
+      console.log('Flight class not specified or missing in parsedFormData');
+    }
+  } catch (error) {
+    console.error('Error parsing formData:', error);
   }
 }
 
