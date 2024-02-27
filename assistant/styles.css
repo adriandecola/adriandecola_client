@@ -476,6 +476,13 @@ html {
   width: 8px;
 }
 
+#send-button:disabled,
+#send-button:disabled:hover {
+  background-color: #ccc; /* Or any other color you use for disabled state */
+  color: #666;
+  cursor: not-allowed;
+}
+
 #messages::-webkit-scrollbar-thumb {
   background: #555; /* Scrollbar thumb */
   border-radius: 4px;

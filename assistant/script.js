@@ -23,6 +23,9 @@ document
   .addEventListener('input', updateTextArea);
 
 function sendMessageFromInput() {
+  // Disable the send button
+  document.getElementById('send-button').disabled = true;
+
   const messageInput = document.getElementById('message-input');
   const userMessage = messageInput.value.trim();
 
@@ -65,18 +68,9 @@ function displayMessage(message, role) {
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message', role);
 
-  // Replace newline characters with HTML line breaks for display
-  let formattedMessage = message.replace(/\n/g, '<br>');
-
-  // Markdown to HTML conversion
-  formattedMessage = formattedMessage
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold with double asterisks
-    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italicize with single asterisks
-    .replace(/_(.*?)_/g, '<em>$1</em>') // Italicize with single underscores
-    .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough with double tildes
-    .replace(/`(.*?)`/g, '<code>$1</code>'); // Monospace with backticks
-
-  messageDiv.innerHTML = `<span class="content">${formattedMessage}</span>`;
+  messageDiv.innerHTML = `<span class="content">${convertMarkdownToHTML(
+    message
+  )}</span>`;
 
   messageWrapper.appendChild(messageDiv);
   messagesContainer.appendChild(messageWrapper);
@@ -113,7 +107,10 @@ async function sendMessage(userMessage) {
     updateLoadingMessage(loadingMessageId, responseData.response);
   } catch (err) {
     console.error('Fetch error:', err);
-    removeLoadingMessage(loadingMessageId); // Remove the loading message in case of error
+    // Remove the loading message in case of error
+    removeLoadingMessage(loadingMessageId);
+    // Re-enable the send button even if there's an error
+    document.getElementById('send-button').disabled = false;
   }
 }
 
@@ -156,15 +153,11 @@ function updateLoadingMessage(loadingMessageId, newMessage) {
     clearInterval(loadingMessage.ellipsisInterval);
 
     // Markdown to HTML conversion
-    let formattedMessage = newMessage
-      .replace(/\n/g, '<br>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold with double asterisks
-      .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italicize with single asterisks
-      .replace(/_(.*?)_/g, '<em>$1</em>') // Italicize with single underscores
-      .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough with double tildes
-      .replace(/`(.*?)`/g, '<code>$1</code>'); // Monospace with backticks
+    loadingMessage.querySelector('.content').innerHTML =
+      convertMarkdownToHTML(newMessage);
 
-    loadingMessage.querySelector('.content').innerHTML = formattedMessage;
+    // Re-enable the send button
+    document.getElementById('send-button').disabled = false;
   }
 }
 
@@ -267,4 +260,32 @@ function submitFunction() {
 ///////////////////////////// Other helper functions ///////////////////////////////////////
 function updateCompanyDetails(formData) {
   // Function body is empty
+}
+
+function convertMarkdownToHTML(markdownText) {
+  let htmlText = markdownText
+    .replace(/\n/g, '<br>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold with double asterisks
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italicize with single asterisks
+    .replace(/_(.*?)_/g, '<em>$1</em>') // Italicize with single underscores
+    .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough with double tildes
+    .replace(/`(.*?)`/g, '<code>$1</code>'); // Monospace with backticks
+
+  // Handle unordered lists
+  htmlText = htmlText.replace(
+    /(?:\r\n|\r|\n)(\*|\+|-) (.+)/g,
+    (match, bullet, item) => {
+      return `<ul><li>${item}</li></ul>`;
+    }
+  );
+
+  // Handle ordered lists
+  htmlText = htmlText.replace(
+    /(?:\r\n|\r|\n)(\d+\.) (.+)/g,
+    (match, number, item) => {
+      return `<ol><li>${item}</li></ol>`;
+    }
+  );
+
+  return htmlText;
 }
