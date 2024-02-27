@@ -263,3 +263,8 @@ function submitFunction() {
   // Placeholder for future implementation
   console.log('Submit button clicked');
 }
+
+///////////////////////////// Other helper functions ///////////////////////////////////////
+function updateCompanyDetails(formData) {
+  // Function body is empty
+}
