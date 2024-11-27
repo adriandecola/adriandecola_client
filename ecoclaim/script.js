@@ -95,18 +95,15 @@ function sendMessageFromInput() {
 async function getFormData(userMessage) {
 	try {
 		console.log('Posting to /form');
-		const response = await fetch(
-			'https://assistant.meta-carbon.com/backend/form',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					message: userMessage,
-				}),
-			}
-		);
+		const response = await fetch('https://api.adriandecola.com/form', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				message: userMessage,
+			}),
+		});
 
 		// Getting form data in JSON format
 		const formData = await response.json();
@@ -254,19 +251,16 @@ async function sendMessage(userMessage) {
 
 	try {
 		console.log('Posting to /assistant');
-		const response = await fetch(
-			'https://assistant.meta-carbon.com/backend/assistant',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					message: userMessage,
-					threadId: currentThreadId, // Pass the currentThreadId
-				}),
-			}
-		);
+		const response = await fetch('https://api.adriandecola.com/assistant', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				message: userMessage,
+				threadId: currentThreadId, // Pass the currentThreadId
+			}),
+		});
 		// For debugging
 		console.log(response);
 
