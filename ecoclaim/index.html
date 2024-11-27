@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head tabindex="-1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Carbon's Footprint Calculator</title>
+
+    <meta name="description" content="An AI powered chatbot to estimate flight carbon emissions." />
+    <meta property="og:title" content="Meta Carbon's Footprint Calculator"/>
+	<meta property="og:image" content="images/carbon_chatter_icon.png"/>
+	<meta property="og:url" content="assistamt.meta-carbon.com"/>
+	<meta property="og:site_name" content="Meta Carbon's Footprint Calculator"/>
+	<meta property="og:description" content="An AI powered chatbot to estimate flight carbon emissions."/>
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="chat-container">
+
+        <!-- Top Large Message and Travel Details Container-->
+        <div id="content-area">
+
+            <!-- Left Messages Panel -->
+            <div id="messages">
+                <div id="chat-header" class="hidden-mobile">
+                    <img src="images/meta-carbon-logo.png" alt="Meta Carbon's Footprint Calculator Icon" id="chat-icon">
+                    <div id="chat-title">Meta Carbon's Footprint Calculator</div>
+                </div>
+                <div id="scrollable-messages">
+                    <!-- The rest of your messages will go here -->
+                </div>
+            </div>
+
+            <!-- Right Travel Details Panel -->
+            <!-- This is a flex container -->
+            <div id="travel-details-container">
+                <!-- Meta Carbon Logo on mobile-->
+                <div id="chat-header" class="hidden-desktop">
+                    <img src="images/meta-carbon-logo.png" alt="Meta Carbon's Footprint Calculator Icon" id="chat-icon">
+                    <div id="chat-title">Meta Carbon's Footprint Calculator</div>
+                </div>
+                <!-- Flight Icon -->
+                <div id="flight-icon" class="hidden-mobile">
+                    <img src="./images/Flight.png" alt="Flight Icon" id="icon-placeholder"> 
+                </div>
+                <!-- Large, first header -->
+                <div id="header-content" class="hidden-mobile">
+                    Calculate your travel footprint <!-- Header text -->
+                </div>
+                <!-- Airports header -->
+                <div id="airports-header" class="hidden-mobile">
+                    Airports
+                </div>
+                <!-- Placeholder for Error Messages -->
+                <div id="error-message" class="error-message"></div>
+                <!-- Travel type selection -->
+                <div id="travel-type" class="flex-container">
+                    <label class="radio-option">
+                    <input type="radio" name="travel" value="roundtrip" id="return">
+                    <span class="custom-radio"></span>
+                    Round trip
+                    </label>
+                    <label class="radio-option">
+                    <input type="radio" name="travel" value="one-way" id="one-way">
+                    <span class="custom-radio"></span>
+                    One way
+                    </label>
+                </div>
+                <!-- Line break here -->
+                <div class="line-break hidden-mobile"></div>
+                <!-- New wrapper for specific two-column inputs -->
+                <div class="two-column-layout">
+                    <!-- From Airport input field -->
+                    <div class="input-container">
+                        <label for="from-airport">From</label>
+                        <input type="text" id="from-airport" placeholder="Initial airport">
+                    </div>
+                    <!-- To Airport input field -->
+                    <div class="input-container">
+                        <label for="to-airport">To</label>
+                        <input type="text" id="to-airport" placeholder="Destination airport">
+                    </div>
+                    <!-- Passengers input field -->
+                    <div class="input-container">
+                        <label for="passengers">Passengers</label>
+                        <div class="number-input-container">
+                            <input type="number" id="passengers" name="passengers" value="1" min="1">
+                            <div class="button-container">
+                                <button type="button" onclick="decrementValue()" class="minus" tabindex="-1"></button>
+                                <button type="button" onclick="incrementValue()" class="plus" tabindex="-1">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Flight Class input field -->
+                    <div class="input-container">
+                        <label for="class">Class</label>
+                        <div class="class-input-dropdown">
+                            <button class="dropbtn" id="selected-class" tabindex="0">Select Class</button>
+                            <div class="dropdown-content" id="class-options">
+                                <a href="#" tabindex="-1" onclick="chooseClass('Economy')">Economy</a>
+                                <a href="#" tabindex="-1" onclick="chooseClass('Premium Economy')">Premium Economy</a>
+                                <a href="#" tabindex="-1" onclick="chooseClass('Business')">Business</a>
+                                <a href="#" tabindex="-1" onclick="chooseClass('First Class')">First Class</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Submit Button -->
+                <div class="input-container">
+                    <button type="button" id="submit-button" onclick="submitFunction()">Submit</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bottom Message Form -->
+        <form id="message-form">
+            <textarea id="message-input" placeholder="Type your message here..." ></textarea>
+            <!-- <div id="word-count">0/120</div> -->
+            <!-- File upload button -->
+            <label for="upload-file" id="upload-label"><i class="fa fa-paperclip"></i></label>
+            <input type="file" id="upload-file" style="display: none;" />
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+    
+    <script src="script.js"></script>
+    <!-- the MathJax script here -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+
+
+</html>
