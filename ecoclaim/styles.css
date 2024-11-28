@@ -58,7 +58,7 @@ html {
 #chat-title {
 	font-family: 'Popins', Arial;
 	font-weight: 600;
-	color: #28ccb4; /* Green text */
+	color: #9cdf16; /* Green text */
 	font-size: 1.3em; /* Adjust the font size as needed */
 	margin-top: 10px; /* Add space between the logo and the title */
 	padding: 5px; /* Makes sure the title doesn't go behind the seperator */
@@ -113,7 +113,7 @@ html {
 }
 
 .message.user {
-	background-color: #24b7a2; /* Green background for user messages */
+	background-color: #9cdf16; /* Green background for user messages */
 }
 /*************************************************************************************/
 /* Travel Details Styles */
@@ -194,7 +194,7 @@ html {
 	left: 0.15rem; /* Adjust these values to center the circle */
 	width: 0.55rem; /* Size of the inner circle */
 	height: 0.55rem; /* Size of the inner circle */
-	background-color: #24b7a2;
+	background-color: #9cdf16;
 	border-radius: 50%;
 }
 .radio-option input[type='radio']:checked + .custom-radio {
@@ -240,9 +240,9 @@ html {
 	opacity: 1; /* Override the default opacity in Chrome */
 }
 .input-container input[type='text']:focus {
-	border-color: #24b7a2;
+	border-color: #9cdf16;
 	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #24b7a2; /* Adds a glow effect */
+	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
 }
 
 /* For passanger input field */
@@ -287,7 +287,7 @@ html {
 	.number-input-container
 	.button-container
 	button {
-	background-color: #24b7a2; /* Green background */
+	background-color: #9cdf16; /* Green background */
 	color: white;
 	border: none;
 	padding: 10px;
@@ -337,13 +337,13 @@ html {
 /* Makes sure no outline on the outer container */
 .input-container input[type='number']:focus {
 	outline: none;
-	box-shadow: 0 0 0px #24b7a2;
+	box-shadow: 0 0 0px #9cdf16;
 }
 
 #travel-details-container .input-container .number-input-container.focused {
-	border-color: #24b7a2;
+	border-color: #9cdf16;
 	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #24b7a2; /* Adds a glow effect */
+	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
 }
 
 /* For flight class dropdown selection */
@@ -367,9 +367,9 @@ html {
 }
 
 .class-input-dropdown.focused {
-	border-color: #24b7a2;
+	border-color: #9cdf16;
 	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #24b7a2; /* Adds a glow effect */
+	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
 }
 
 /* Style the button to match the input container style */
@@ -388,7 +388,7 @@ html {
 
 /* Add similar focus styles for the class dropdown button */
 .class-input-dropdown .dropbtn:focus {
-	border-color: #24b7a2;
+	border-color: #9cdf16;
 	outline: none !important;
 	box-shadow: none !important;
 }
@@ -425,7 +425,7 @@ html {
 .emissions-info {
 	font-family: 'Poppins', arial;
 	font-size: 0.9rem;
-	color: #24b7a2;
+	color: #9cdf16;
 	padding: 5px;
 	margin-bottom: 5px;
 }
@@ -436,14 +436,14 @@ html {
 	padding: 10px; /* Same padding as input fields for consistent height */
 	border-radius: 0.6rem; /* Match the border radius of input containers */
 	border: none; /* No border for the button */
-	background-color: #24b7a2; /* Green background color */
+	background-color: #9cdf16; /* Green background color */
 	color: white; /* White text color */
 	font-size: 1rem; /* Match the font size of input text */
 	cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 #travel-details-container #submit-button:hover {
-	background-color: #28ccb4; /* Slightly lighter green on hover */
+	background-color: #9cdf16; /* Slightly lighter green on hover */
 }
 
 #travel-details-container #submit-button:disabled,
@@ -487,7 +487,7 @@ html {
 }
 
 #message-input:focus {
-	border: 2px solid #24b7a2; /* Change the border color to green and set its width */
+	border: 2px solid #9cdf16; /* Change the border color to green and set its width */
 	outline: none; /* Optional: Removes the default focus outline */
 }
 
@@ -528,7 +528,7 @@ html {
 }
 
 #message-form #send-button {
-	background-color: #28ccb4; /* Green button */
+	background-color: #9cdf16; /* Green button */
 	font-weight: 5000;
 	color: #444;
 	border: none;
@@ -539,7 +539,7 @@ html {
 }
 
 #message-form button:hover {
-	background-color: #24b7a2;
+	background-color: #9cdf16;
 }
 
 /* Scrollbar Styles */
@@ -593,15 +593,15 @@ input:focus,
 a:focus,
 select:focus,
 textarea:focus {
-	outline: 2px solid #24b7a2; /* Example green color */
+	outline: 2px solid #9cdf16; /* Example green color */
 	outline-offset: 2px; /* Adds space between the outline and the element's border */
 }
 
 /* Additional style for dropdown options for consistency */
 .class-input-dropdown .dropdown-content a:focus {
-	border-color: #24b7a2;
+	border-color: #9cdf16;
 	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 5px #24b7a2; /* Adds a glow effect */
+	box-shadow: 0 0 5px #9cdf16; /* Adds a glow effect */
 }
 
 /************* MOBILE *************/
