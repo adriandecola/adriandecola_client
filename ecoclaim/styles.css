@@ -52,7 +52,7 @@ html {
 }
 
 #chat-icon {
-	width: 100px;
+	width: 50%;
 }
 
 #chat-title {
@@ -443,11 +443,11 @@ html {
 }
 
 #travel-details-container #submit-button:hover {
-	background-color: #9cdf16; /* Slightly lighter green on hover */
+	background-color: #bae95c; /* Slightly lighter green on hover */
 }
 
 #travel-details-container #submit-button:disabled,
-#travel-details-container r#submit-button:disabled:hover {
+#travel-details-container #submit-button:disabled:hover {
 	background-color: #ccc; /* Or any other color you use for disabled state */
 	color: #666;
 	cursor: not-allowed;
@@ -538,8 +538,8 @@ html {
 	margin-left: 10px;
 }
 
-#message-form button:hover {
-	background-color: #9cdf16;
+#message-form #send-button:hover {
+	background-color: #bae95c;
 }
 
 /* Scrollbar Styles */
@@ -626,6 +626,7 @@ textarea:focus {
 
 	#chat-icon {
 		width: 50px;
+		margin-top: 10px;
 	}
 
 	#chat-title {
