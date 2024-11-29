@@ -52,14 +52,14 @@ html {
 }
 
 #chat-icon {
-	width: 50%;
+	width: 10%;
 }
 
 #chat-title {
 	font-family: 'Popins', Arial;
 	font-weight: 600;
 	color: #9cdf16; /* Green text */
-	font-size: 1.3em; /* Adjust the font size as needed */
+	font-size: 2.3em; /* Adjust the font size as needed */
 	margin-top: 10px; /* Add space between the logo and the title */
 	padding: 5px; /* Makes sure the title doesn't go behind the seperator */
 }
@@ -135,7 +135,7 @@ html {
 }
 
 /* For image */
-#travel-details-container #flight-icon {
+#travel-details-container #flight-icon #icon-placeholder {
 	height: 40px;
 }
 
