@@ -27,35 +27,6 @@ document
 	.getElementById('message-input')
 	.addEventListener('input', updateTextArea);
 
-// This event listener handles the file upload as soon as the user selects a file.
-document
-	.getElementById('upload-file')
-	.addEventListener('change', async function (event) {
-		if (event.target.files.length > 0) {
-			const file = event.target.files[0];
-			const formData = new FormData();
-			formData.append('file', file);
-
-			try {
-				const response = await fetch(
-					'https://assistant.meta-carbon.com/backend/upload',
-					{
-						method: 'POST',
-						body: formData,
-					}
-				);
-				const result = await response.json();
-				if (result.fileId) {
-					document.getElementById('message-input').dataset.fileId =
-						result.fileId; // Storing the fileId in the dataset for later use
-				}
-				console.log('File uploaded successfully:', result);
-			} catch (error) {
-				console.error('Error uploading file:', error);
-			}
-		}
-	});
-
 function sendMessageFromInput() {
 	// Disable the send button
 	document.getElementById('send-button').disabled = true;
@@ -90,29 +61,6 @@ function sendMessageFromInput() {
 	}
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
-}
-
-async function getFormData(userMessage) {
-	try {
-		console.log('Posting to /form');
-		const response = await fetch('https://api.adriandecola.com/form', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				message: userMessage,
-			}),
-		});
-
-		// Getting form data in JSON format
-		const formData = await response.json();
-		console.log('Form Data: ', formData);
-
-		updateFormFields(formData);
-	} catch (err) {
-		console.error('Form fetch error:', err);
-	}
 }
 
 function updateFormFields(formData) {
