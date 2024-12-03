@@ -3,16 +3,19 @@
 <head tabindex="-1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meta Carbon's Footprint Calculator</title>
+    <title>EcoClaim Assistant</title>
 
     <meta name="description" content="An AI powered chatbot to estimate building project carbon emissions." />
-    <meta property="og:title" content="EcoClaim's Footprint Calculator"/>
+    <meta property="og:title" content="EcoClaim Assistant"/>
 	<meta property="og:image" content="images/ecoclaim_small_icon.png"/>
 	<meta property="og:url" content="ecoclaim.adriandecola.com"/>
 	<meta property="og:site_name" content="EcoClaim's Footprint Calculator"/>
 	<meta property="og:description" content="An AI powered chatbot to estimate building project carbon emissions."/>
 
+    <!-- Link to CSS File -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Links for Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,64 +26,46 @@
 <body>
     <div id="chat-container">
 
-        <!-- Top Large Message and Travel Details Container-->
-        <div id="content-area">
+        <!-- Top Part (Message and Travel Details Container)-->
+        <div id="top-area">
 
             <!-- Left Messages Panel -->
-            <div id="messages">
+            <div id="top-left-area">
                 <div id="chat-header" class="hidden-mobile">
                     <img src="images/ecoclaim_small_icon.png" alt="EcoClaim's Icon" id="chat-icon">
                     <div id="chat-title">EcoClaim Assistant</div>
                 </div>
                 <div id="scrollable-messages">
-                    <!-- The rest of your messages will go here -->
+                    <!-- The messages will go here -->
                 </div>
             </div>
 
             <!-- Right Travel Details Panel -->
             <!-- This is a flex container -->
-            <div id="travel-details-container">
+            <div id="top-right-area">
                 <!-- Meta Carbon Logo on mobile-->
                 <div id="chat-header" class="hidden-desktop">
                     <img src="images/ecoclaim_small_icon.png" alt="EcoClaim's Footprint Calculator Icon" id="chat-icon">
                     <div id="chat-title">EcoClaim's Footprint Calculator</div>
                 </div>
-                <!-- Flight Icon -->
-                <div id="flight-icon" class="hidden-mobile">
-                    <img src="./images/recycle_symbol.png" alt="Recycling symbol" id="icon-placeholder"> 
+                <!-- Recycle Icon -->
+                <div id="recycle-icon" class="hidden-mobile">
+                    <img src="./images/recycle_symbol.png" alt="Recycling symbol" id="recylce-icon-placeholder"> 
                 </div>
                 <!-- Large, first header -->
-                <div id="header-content" class="hidden-mobile">
-                    Estimate Emissions Associated with Restoration Services <!-- Header text -->
+                <div id="top-right-header" class="hidden-mobile">
+                    Estimate Emissions Associated with Restoration Services
                 </div>
                 <!-- Placeholder for Error Messages -->
                 <div id="error-message" class="error-message"></div>
                 <!-- Line break here -->
                 <div class="line-break hidden-mobile"></div>
-                <!-- Flight Class input field -->
-                <div class="input-container">
-                    <label for="class">Material</label>
-                    <div class="class-input-dropdown">
-                        <button class="dropbtn" id="selected-class" tabindex="0">-Select One-</button>
-                        <div class="dropdown-content" id="class-options">
-                            <a href="#" tabindex="-1" onclick="chooseClass('Economy')">Economy</a>
-                            <a href="#" tabindex="-1" onclick="chooseClass('Premium Economy')">Premium Economy</a>
-                            <a href="#" tabindex="-1" onclick="chooseClass('Business')">Business</a>
-                            <a href="#" tabindex="-1" onclick="chooseClass('First Class')">First Class</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Passengers input field -->
-                <div class="input-container">
-                    <label for="passengers">Passengers</label>
-                    <div class="number-input-container">
-                        <input type="number" id="passengers" name="passengers" value="1" min="1">
-                        <div class="button-container">
-                            <button type="button" onclick="decrementValue()" class="minus" tabindex="-1"></button>
-                            <button type="button" onclick="incrementValue()" class="plus" tabindex="-1">+</button>
-                        </div>
-                    </div>
-                </div>
+                <!-- Material Input Field -->
+                <!-- FILL THIS OUT -->
+
+                <!-- Weight Input Field -->
+                <!-- FILL THIS OUT-->
+
                 <!-- Submit Button -->
                 <div class="input-container">
                     <button type="button" id="submit-button" onclick="submitFunction()">Submit</button>
@@ -90,9 +75,9 @@
         </div>
 
         <!-- Bottom Message Form -->
-        <form id="message-form">
+        <form id="bottom-area">
             <textarea id="message-input" placeholder="Type your message here..." ></textarea>
-            <!-- <div id="word-count">0/120</div> -->
+            <div id="word-count">0/150</div>
             <!-- File upload button -->
             <!-- <label for="upload-file" id="upload-label"><i class="fa fa-paperclip"></i></label>
             <input type="file" id="upload-file" style="display: none;" /> -->
@@ -100,10 +85,8 @@
         </form>
     </div>
     
+    <!-- JavaScript Scripts-->
     <script src="script.js"></script>
-    <!-- the MathJax script here -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 
 

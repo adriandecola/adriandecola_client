@@ -166,12 +166,12 @@ function updateTextArea() {
 	const messageInput = document.getElementById('message-input');
 	let words = messageInput.value.split(/\s+/).filter(Boolean);
 
-	if (words.length > 120) {
-		words = words.slice(0, 120);
+	if (words.length > 150) {
+		words = words.slice(0, 150);
 		messageInput.value = words.join(' ');
 	}
 
-	document.getElementById('word-count').textContent = `${words.length}/120`;
+	document.getElementById('word-count').textContent = `${words.length}/150`;
 }
 
 function displayMessage(message, role) {
@@ -376,93 +376,6 @@ function submitFunction() {
 	}
 }
 
-/*
-// Inside your submitFunction
-function submitFunction() {
-  let isFormValid = true;
-
-  // Reset error states
-  document.querySelectorAll('.error-highlight').forEach((element) => {
-    element.classList.remove('error-highlight');
-  });
-
-  const errorMessageDiv = document.getElementById('error-message');
-  errorMessageDiv.style.display = 'none'; // Hide error message by default
-
-  // Input validation checks
-  const travelTypeChecked = document.querySelector(
-    'input[name="travel"]:checked'
-  );
-  const fromAirport = document.getElementById('from-airport');
-  const toAirport = document.getElementById('to-airport');
-  const passengers = document.getElementById('passengers');
-  const selectedClassText =
-    document.getElementById('selected-class').textContent;
-
-  if (!travelTypeChecked) {
-    document.querySelector('#travel-type').classList.add('error-highlight');
-    isFormValid = false;
-  }
-  if (fromAirport.value.trim() === '') {
-    fromAirport.classList.add('error-highlight');
-    isFormValid = false;
-  }
-  if (toAirport.value.trim() === '') {
-    toAirport.classList.add('error-highlight');
-    isFormValid = false;
-  }
-  if (parseInt(passengers.value, 10) < 1 || passengers.value.trim() === '') {
-    passengers.classList.add('error-highlight');
-    isFormValid = false;
-  }
-  if (selectedClassText === 'Select Class' || selectedClassText.trim() === '') {
-    document
-      .querySelector('.class-input-dropdown')
-      .classList.add('error-highlight');
-    isFormValid = false;
-  }
-
-  // Show error message if form is invalid
-  if (!isFormValid) {
-    errorMessageDiv.textContent =
-      'Please fill out all aspects of your flight before submitting.';
-    errorMessageDiv.style.display = 'block'; // Make the error message visible
-  } else {
-    // Form is valid, proceed with your submission logic
-    // Hide error message in case it was previously shown
-    errorMessageDiv.style.display = 'none';
-
-    // Construct the sumbit message
-    const travelType = document.querySelector(
-      'input[name="travel"]:checked'
-    ).value;
-    // Convert travel type to camel case for the success message
-    const travelTypeCamelCase =
-      travelType.charAt(0).toUpperCase() + travelType.slice(1).toLowerCase();
-    const fromAirport = document.getElementById('from-airport').value;
-    const toAirport = document.getElementById('to-airport').value;
-    const passengers = document.getElementById('passengers').value;
-    const flightClass = document.getElementById('selected-class').textContent;
-
-    const submitMessage =
-      `My flight details are: \n\n` +
-      `Travel Type: ${travelTypeCamelCase}\n` +
-      `From: ${fromAirport}\n` +
-      `To: ${toAirport}\n` +
-      `Passengers: ${passengers}\n` +
-      `Class: ${flightClass}`;
-
-    // Display the submit message in the chat area
-    displayMessage(submitMessage, 'user');
-
-    // Send the message
-    sendMessage(submitMessage);
-
-    console.log('Form submitted successfully.');
-  }
-}
-*/
-
 //////////////////////////////// Travel Details JS ////////////////////////////////
 document.getElementById('passengers').addEventListener('focus', function () {
 	this.parentNode.classList.add('focused');
@@ -509,90 +422,6 @@ document.getElementById('passengers').addEventListener('input', function (e) {
 	if (e.target.value.length > 1 && e.target.value.startsWith('0')) {
 		e.target.value = e.target.value.substring(1);
 	}
-});
-
-//////// For flight class selection /////////
-// Function to set the selected class and close the dropdown
-function chooseClass(selectedClass) {
-	document.getElementById('selected-class').textContent = selectedClass;
-	document.getElementById('class-options').style.display = 'none';
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-	const classDropdownBtn = document.getElementById('selected-class');
-	const classOptionsContainer = document.getElementById('class-options');
-	const classOptions = classOptionsContainer.querySelectorAll('a');
-	const submitButton = document.getElementById('submit-button');
-
-	let dropdownOpen = false;
-
-	function toggleDropdown(open) {
-		dropdownOpen = open;
-		classOptionsContainer.style.display = open ? 'block' : 'none';
-	}
-
-	// Open or close the dropdown when the button is clicked
-	classDropdownBtn.addEventListener('click', function (event) {
-		toggleDropdown(!dropdownOpen);
-		event.stopPropagation();
-	});
-
-	// Close the dropdown when clicking outside of it
-	document.addEventListener('click', function () {
-		if (dropdownOpen) {
-			toggleDropdown(false);
-		}
-	});
-
-	// Prevent the dropdown from closing when clicking on it
-	classOptionsContainer.addEventListener('click', function (event) {
-		event.stopPropagation();
-	});
-
-	// Navigate through options with the keyboard
-	classDropdownBtn.addEventListener('keydown', function (event) {
-		if (event.key === 'Enter' && dropdownOpen) {
-			// Prevent it from submitting the form
-			event.preventDefault();
-			toggleDropdown(false);
-			// Move focus to the submit button only if the dropdown was already open
-			submitButton.focus();
-		} else if (event.key === 'ArrowDown') {
-			event.preventDefault();
-			if (!dropdownOpen) {
-				toggleDropdown(true);
-			}
-			classOptions[0].focus();
-		}
-	});
-
-	classOptions.forEach((option, index) => {
-		option.addEventListener('keydown', function (event) {
-			if (event.key === 'ArrowDown') {
-				event.preventDefault();
-				const nextOption = classOptions[index + 1] || classOptions[0];
-				nextOption.focus();
-			} else if (event.key === 'ArrowUp') {
-				event.preventDefault();
-				const prevOption =
-					classOptions[index - 1] ||
-					classOptions[classOptions.length - 1];
-				prevOption.focus();
-			} else if (event.key === 'Enter') {
-				event.preventDefault();
-				classDropdownBtn.textContent = this.textContent;
-				toggleDropdown(false);
-				submitButton.focus();
-			}
-		});
-
-		// Select an option with a click and move focus to the submit button
-		option.addEventListener('click', function () {
-			classDropdownBtn.textContent = this.textContent;
-			toggleDropdown(false);
-			submitButton.focus();
-		});
-	});
 });
 
 /* for fosusing the right text box for correct highlighting */
@@ -656,79 +485,4 @@ function convertMarkdownToHTML(markdownText) {
 	});
 
 	return htmlText;
-}
-
-function updateFlightDetails(flightFormData, flightEmissions) {
-	console.log('Updating flight details with:', flightFormData);
-	console.log('Updating flight emissions as well with:', flightEmissions);
-
-	// Check and update travel type
-	if (flightFormData.travelType === 'round trip') {
-		document.getElementById('return').checked = true;
-	} else if (flightFormData.travelType === 'one-way') {
-		document.getElementById('one-way').checked = true;
-	}
-
-	// Update initial and final airport fields
-	document.getElementById('from-airport').value =
-		flightFormData.initialAirport || '';
-	document.getElementById('to-airport').value =
-		flightFormData.finalAirport || '';
-
-	// Update number of passengers
-	document.getElementById('passengers').value =
-		flightFormData.passengers || 1;
-
-	// Update flight class
-	const classMappings = {
-		economy: 'Economy',
-		'premium economy': 'Premium Economy',
-		business: 'Business',
-		'first class': 'First Class',
-	};
-	const selectedClass =
-		classMappings[flightFormData.flightClass.toLowerCase()];
-	document.getElementById('selected-class').textContent =
-		selectedClass || 'Select Class';
-
-	// Display the flight emissions
-	displayEmissionsMessage(flightEmissions);
-}
-
-function displayEmissionsMessage(flightEmissions) {
-	const emissionsMessage = `The carbon emissions from your flight is ${
-		Math.round(flightEmissions * 1000) / 1000
-	} tons of CO2.`;
-	let emissionsDiv = document.getElementById('emissions-message');
-
-	// If the emissions message div does not exist, create it
-	if (!emissionsDiv) {
-		emissionsDiv = document.createElement('div');
-		emissionsDiv.id = 'emissions-message';
-		emissionsDiv.className = 'emissions-info'; // Add this class for potential styling
-	}
-
-	emissionsDiv.textContent = emissionsMessage;
-
-	// Insert the emissions message div right before the submit button
-	const submitButtonDiv = document.getElementById('submit-button').parentNode;
-	submitButtonDiv.parentNode.insertBefore(emissionsDiv, submitButtonDiv);
-}
-
-// Function to gather flight details
-function getFlightDetailsAsString() {
-	const travelType = document.querySelector('input[name="travel"]:checked')
-		? document.querySelector('input[name="travel"]:checked').value
-		: 'not specified';
-	const fromAirport =
-		document.getElementById('from-airport').value || 'not specified';
-	const toAirport =
-		document.getElementById('to-airport').value || 'not specified';
-	const passengers =
-		document.getElementById('passengers').value || 'not specified';
-	const flightClass =
-		document.getElementById('selected-class').textContent ||
-		'not specified';
-
-	return `Travel Type: ${travelType}, From: ${fromAirport}, To: ${toAirport}, Passengers: ${passengers}, Class: ${flightClass}`;
 }

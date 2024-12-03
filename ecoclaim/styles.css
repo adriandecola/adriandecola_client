@@ -1,7 +1,8 @@
-/* General Styles */
+/*************************************************************************************/
+/****************************** For the entire document ******************************/
+/*************************************************************************************/
 /* I have quicksand (secondary font aka reg text) in 400, 500, and 700 */
 /* I have poppins (primary font aka headings text) in 600 and 500 */
-
 body {
 	font-family: 'Quicksand', sans-serif;
 	font-weight: 400;
@@ -11,34 +12,84 @@ body {
 	color: #fff; /* White text */
 	display: flex;
 	justify-content: center;
+	/* Covers entire screen */
 	width: 100vw;
+	height: 100vh;
 }
-
-body,
-html {
-	height: 100% !important;
-}
-
 /* Chat Container Styles */
 #chat-container {
 	width: 100%;
-	height: 87%;
+	height: 100%; /* Proportion of height for entire screen */
 	background-color: #444;
 	border-radius: 0;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	display: flex;
 	flex-direction: column;
 }
+/* For Focusing */
+button:focus,
+input:focus,
+a:focus,
+select:focus,
+textarea:focus {
+	outline: 2px solid #9cdf16; /* Example green color */
+	outline-offset: 2px; /* Adds space between the outline and the element's border */
+}
+/* Error Message Styles */
+.error-message {
+	color: red;
+	margin-bottom: 12px; /* Adjust as needed */
+	text-align: center;
+	display: none; /* Initially hidden */
+}
+/* Error Highlight Styles */
+.error-highlight {
+	outline: 2px solid rgba(255, 0, 0, 0.5); /* Adds a red outline */
+	box-shadow: 0 0 4px rgba(255, 0, 0, 0.5); /* Adds a subtle red glow */
+}
+/* Hide desktop specific things */
+.hidden-desktop {
+	display: none !important;
+}
 
+/*************************************************************************************/
+/************************* For the entire top part document *************************/
+/********************** Excludes current message user is typing **********************/
+/*************************************************************************************/
 /* Content Area Styles */
-#content-area {
+#chat-container #top-area {
 	display: flex;
-	flex: 1; /* This will make content-area flexible */
+	flex: 1; /* This will make top-area flexible */
 	min-height: 0; /* Fix for flexbox overflow issue */
 }
 
+/*************************************************************************************/
+/******************** Top-Left Side (where messages are displayed) *******************/
+/*************************************************************************************/
+/* Messages Area Styles */
+#chat-container #top-area #top-left-area {
+	display: flex; /* this makes the messages not fixed in size? */
+	flex-direction: column;
+	height: 100%; /* Ensure the messages container fills the area */
+	flex-grow: 2;
+	overflow-y: auto;
+	padding: 0px;
+	background-color: #333;
+	margin-right: 5px; /* Padding between messages and company details */
+	width: 65%;
+}
+
+/* Scrollbar Styles */
+#top-left-area::-webkit-scrollbar {
+	width: 8px;
+}
+#top-left-area::-webkit-scrollbar-thumb {
+	background: #555; /* Scrollbar thumb */
+	border-radius: 4px;
+}
+
 /* Chat Header Styles */
-#chat-header {
+#top-left-area #chat-header {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column; /* Stack items vertically */
@@ -51,11 +102,13 @@ html {
 	flex-shrink: 0; /* Prevents the header from shrinking */
 }
 
-#chat-icon {
+/* Chat Icon Styles */
+#top-left-area #chat-header #chat-icon {
 	width: 10%;
 }
 
-#chat-title {
+/* Chat Title Styles */
+#top-left-area #chat-header #chat-title {
 	font-family: 'Popins', Arial;
 	font-weight: 600;
 	color: #9cdf16; /* Green text */
@@ -65,44 +118,29 @@ html {
 }
 
 /* Scrollable Messages Area Styles */
-#scrollable-messages {
+#top-left-area #scrollable-messages {
 	overflow-y: auto; /* Enable vertical scrolling */
 	width: 100%; /* Ensure it takes the full width */
 	flex-grow: 1; /* Takes up the remaining space in the flex container */
 }
 
-/* Messages Area Styles */
-#messages {
-	display: flex; /* this makes the messages not fixed in size? */
-	flex-direction: column;
-	height: 100%; /* Ensure the messages container fills the area */
-	flex-grow: 2;
-	overflow-y: auto;
-	padding: 0px;
-	background-color: #333;
-	margin-right: 5px; /* Padding between messages and company details */
-	width: 65%;
-}
-
-.message-wrapper {
+/* Styles for each message */
+#top-left-area #scrollable-messages .message-wrapper {
 	max-width: 80%; /* Limit maximum width of messages */
 }
-
-.message .content {
+#top-left-area #scrollable-messages .message .content {
 	font-size: 1em; /* Match font size */
 }
-
-.message-wrapper.user {
+#top-left-area #scrollable-messages .message-wrapper.user {
 	margin-left: auto; /* Push user messages to the right */
 	margin-right: 1.8%;
+	background-color: #9cdf16; /* Green background for user messages */
 }
-
-.message-wrapper.assistant {
+#top-left-area #scrollable-messages .message-wrapper.assistant {
 	margin-right: auto; /* Keep assistant messages to the left */
 	margin-left: 1.8%;
 }
-
-.message {
+#top-left-area #scrollable-messages .message {
 	padding: 10px;
 	margin-bottom: 10px;
 	border-radius: 10px;
@@ -112,12 +150,10 @@ html {
 	font-size: 0.9em; /* Smaller font size for messages */
 }
 
-.message.user {
-	background-color: #9cdf16; /* Green background for user messages */
-}
 /*************************************************************************************/
-/* Travel Details Styles */
-#travel-details-container {
+/********************************* Top Right Area ************************************/
+/*************************************************************************************/
+#chat-container #top-area #top-right-area {
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
@@ -129,80 +165,31 @@ html {
 	width: 35%;
 }
 
-/* Additional Styles to push the Submit button to the bottom */
-#travel-details-container .input-container:last-child {
-	margin-top: auto; /* This pushes the button to the bottom */
-}
-
-/* For image */
-#travel-details-container #flight-icon #icon-placeholder {
+/* Recycle Icon Styles */
+#top-right-area #recycle-icon {
 	height: 40px;
+	width: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#top-right-area #recycle-icon img {
+	max-width: 100%;
+	max-height: 100%; /* Ensures the image fits within the div */
 }
 
 /* For headers in travel details container */
-#travel-details-container #header-content {
+#top-right-area #top-right-header {
 	font-family: 'Poppins', arial;
 	font-size: 1.6rem;
 	color: #020819;
 	margin: 5px;
 	line-height: 1.8rem;
 }
-#travel-details-container #airports-header {
-	font-family: 'Poppins', arial;
-	font-size: 1.3rem;
-	color: #020819;
-	padding: 5px;
-	margin-bottom: 5px;
-}
-
-/*For travel type selection*/
-#travel-details-container #travel-type {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 90%;
-}
-#travel-details-container #travel-type .radio-option {
-	position: relative;
-	color: #020819;
-	font-family: 'Poppins', arial;
-	font-size: 0.8rem;
-	flex-grow: 1;
-	align-items: center;
-	display: flex;
-	justify-content: center;
-}
-#travel-details-container #travel-type .radio-option input[type='radio'] {
-	opacity: 0;
-	position: absolute;
-	width: 1px;
-	height: 1px;
-}
-#travel-details-container #travel-type .radio-option .custom-radio {
-	display: inline-block;
-	width: 0.85rem; /* Large size */
-	height: 0.85rem; /* Large size */
-	border: 1px solid #e0dce4;
-	border-radius: 50%;
-	margin-right: 10px;
-	position: relative;
-}
-.radio-option input[type='radio']:checked + .custom-radio::before {
-	content: '';
-	position: absolute;
-	top: 0.15rem; /* Adjust these values to center the circle */
-	left: 0.15rem; /* Adjust these values to center the circle */
-	width: 0.55rem; /* Size of the inner circle */
-	height: 0.55rem; /* Size of the inner circle */
-	background-color: #9cdf16;
-	border-radius: 50%;
-}
-.radio-option input[type='radio']:checked + .custom-radio {
-	background: white;
-}
 
 /* For the line breaks */
-#travel-details-container .line-break {
+/* CURRENTLY NONE BUT MIGHT WANT LATER */
+#top-right-area .line-break {
 	width: 95%; /* Adjust the width as necessary */
 	height: 1px; /* Adjust the thickness of the line as necessary */
 	background-color: #e0dce4; /* Adjust the color as necessary */
@@ -210,228 +197,8 @@ html {
 	margin-bottom: 15px;
 }
 
-/* For grid container */
-#travel-details-container .two-column-layout {
-	width: 100%;
-}
-
-/* For airport selection */
-#travel-details-container .input-container {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin-bottom: 0.5rem;
-}
-#travel-details-container .input-container label {
-	color: #020819;
-	text-align: left;
-	font-size: 0.7rem;
-	margin-bottom: 0.2rem;
-	font-weight: 500;
-}
-#travel-details-container .input-container input[type='text'] {
-	padding: 10px;
-	border: 1px solid #e0dce4;
-	border-radius: 0.6rem;
-	font-size: 0.85rem;
-}
-.input-container input[type='text']::placeholder {
-	color: #cac6cd;
-	opacity: 1; /* Override the default opacity in Chrome */
-}
-.input-container input[type='text']:focus {
-	border-color: #9cdf16;
-	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
-}
-
-/* For passanger input field */
-#travel-details-container .input-container .number-input-container {
-	position: relative;
-	display: flex;
-	align-items: center;
-	border: 1px solid #e0dce4;
-	border-radius: 0.6rem;
-	padding: 0;
-}
-
-#travel-details-container
-	.input-container
-	.number-input-container
-	input[type='number'] {
-	background-color: transparent;
-	flex-grow: 1;
-	padding: 10px;
-	border: none;
-	-webkit-appearance: none;
-	-moz-appearance: textfield;
-	text-align: left;
-	width: 100%;
-	height: 100%;
-	font-size: 0.85rem;
-}
-
-#travel-details-container
-	.input-container
-	.number-input-container
-	.button-container {
-	display: flex;
-	position: absolute;
-	right: 0;
-	height: 100%; /* Match the height of the input field */
-	align-items: center;
-}
-
-#travel-details-container
-	.input-container
-	.number-input-container
-	.button-container
-	button {
-	background-color: #9cdf16; /* Green background */
-	color: white;
-	border: none;
-	padding: 10px;
-	cursor: pointer;
-	user-select: none;
-	height: 1.6rem; /* Match the height of the input field */
-	width: 1.6rem; /* Set a fixed width to make the buttons square */
-	display: flex;
-	align-items: center; /* Vertically center the content */
-	justify-content: center; /* Horizontally center the content */
-}
-
-#travel-details-container
-	.input-container
-	.number-input-container
-	.button-container
-	.minus {
-	font-size: 1.3rem;
-	margin-right: 0.5rem;
-	border-radius: 0.6rem;
-	position: relative; /* To center the minus sign */
-}
-/* To center the minus sign */
-#travel-details-container
-	.input-container
-	.number-input-container
-	.button-container
-	.minus::after {
-	content: '-';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -55%);
-	font-size: 1.3rem; /* Adjust font size if necessary */
-}
-
-#travel-details-container
-	.input-container
-	.number-input-container
-	.button-container
-	.plus {
-	font-size: 1.3rem;
-	margin-right: 0.5rem;
-	border-radius: 0.6rem;
-}
-
-/* Makes sure no outline on the outer container */
-.input-container input[type='number']:focus {
-	outline: none;
-	box-shadow: 0 0 0px #9cdf16;
-}
-
-#travel-details-container .input-container .number-input-container.focused {
-	border-color: #9cdf16;
-	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
-}
-
-/* For flight class dropdown selection */
-/* Style the dropdown container with the same style as input-container */
-.class-input-dropdown {
-	position: relative; /* Add this line */
-	display: inline-flex;
-	flex-direction: column;
-	border-radius: 0.6rem;
-	margin-bottom: 0.5rem; /* Spacing between this and other input containers */
-	background-color: transparent;
-	flex-grow: 1;
-	padding: 0px;
-	-webkit-appearance: none;
-	-moz-appearance: textfield;
-	text-align: left;
-	width: 100%;
-	height: 100%;
-	border: 1px solid #e0dce4;
-	border-radius: 0.6rem;
-}
-
-.class-input-dropdown.focused {
-	border-color: #9cdf16;
-	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 3px #9cdf16; /* Adds a glow effect */
-}
-
-/* Style the button to match the input container style */
-.class-input-dropdown .dropbtn {
-	font-size: 1rem; /* Match the font size of input containers */
-	color: #000; /* Text color */
-	padding: 10px; /* Padding to match the input containers */
-	border: none; /* No border for the button */
-	border-radius: 0.6rem; /* Match the border-radius of input containers */
-	width: 100%; /* Button should occupy the full width of its parent */
-	text-align: left; /* Align text to the left */
-	cursor: pointer; /* Change cursor on hover */
-	background-color: transparent;
-	font-size: 0.85rem;
-}
-
-/* Add similar focus styles for the class dropdown button */
-.class-input-dropdown .dropbtn:focus {
-	border-color: #9cdf16;
-	outline: none !important;
-	box-shadow: none !important;
-}
-
-/* Style the dropdown content to match the overall design */
-.class-input-dropdown .dropdown-content {
-	display: none; /* Hide the dropdown content initially */
-	position: absolute;
-	background-color: #f9f9f9;
-	width: 100%;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
-	border-radius: 0.6rem; /* Match the border-radius of input containers */
-	text-decoration: none;
-}
-
-/* Style the dropdown links to look like options */
-.class-input-dropdown .dropdown-content a {
-	color: black;
-	padding: 10px; /* Padding to match the button */
-	text-decoration: none;
-	display: block;
-	border-bottom: 1px solid #e0dce4; /* Separator for options */
-	font-family: Arial; /* Specific font family */
-	font-size: 0.85rem; /* Specific font size */
-}
-
-/* Remove border from the last link to match input container style */
-.class-input-dropdown .dropdown-content a:last-child {
-	border-bottom: none;
-}
-
-/* Emissions Message */
-.emissions-info {
-	font-family: 'Poppins', arial;
-	font-size: 0.9rem;
-	color: #9cdf16;
-	padding: 5px;
-	margin-bottom: 5px;
-}
-
 /* Submit button */
-#travel-details-container #submit-button {
+#top-right-area #submit-button {
 	width: 100%; /* Match the width of input containers */
 	padding: 10px; /* Same padding as input fields for consistent height */
 	border-radius: 0.6rem; /* Match the border radius of input containers */
@@ -441,24 +208,22 @@ html {
 	font-size: 1rem; /* Match the font size of input text */
 	cursor: pointer; /* Change cursor to pointer on hover */
 }
-
-#travel-details-container #submit-button:hover {
+#top-right-area #submit-button:hover {
 	background-color: #bae95c; /* Slightly lighter green on hover */
 }
-
-#travel-details-container #submit-button:disabled,
-#travel-details-container #submit-button:disabled:hover {
+#top-right-area #submit-button:disabled,
+#top-right-area #submit-button:disabled:hover {
 	background-color: #ccc; /* Or any other color you use for disabled state */
 	color: #666;
 	cursor: not-allowed;
 }
 
-/**********************/
-
+/*************************************************************************************/
+/*********************************** Bottom Area *************************************/
 /*************************************************************************************/
 
-/* Message Form Styles */
-#message-form {
+/* Message Form Styles/Bottom Area Styles */
+#chat-container #bottom-area {
 	box-sizing: border-box;
 	position: fixed; /* Fixed positioning relative to the viewport */
 	bottom: 0; /* Align to the bottom of the viewport */
@@ -471,7 +236,8 @@ html {
 	height: 13%;
 }
 
-#message-input {
+/* Message Input Styles */
+#bottom-area #message-input {
 	box-sizing: border-box;
 	flex-grow: 1;
 	margin: 0px;
@@ -485,26 +251,24 @@ html {
 	font-size: 1em; /* Bigger text in textarea */
 	overflow-y: auto; /* Allows scrolling inside the textarea if text exceeds the height */
 }
-
 #message-input:focus {
 	border: 2px solid #9cdf16; /* Change the border color to green and set its width */
 	outline: none; /* Optional: Removes the default focus outline */
 }
 
+/* Word Count Styles */
 #word-count {
 	color: #aaa; /* Light grey for word count */
 	margin: 0 10px; /* Added margin for spacing */
 	align-self: center;
 }
 
-/* Hide the default file input and show only the custom button */
+/* File Upload Styles */
 #upload-file {
 	opacity: 0;
 	position: absolute;
 	z-index: -1;
 }
-
-/* Custom styled label used as the file upload button */
 #upload-label {
 	display: inline-flex;
 	justify-content: center;
@@ -521,13 +285,13 @@ html {
 	margin-left: 5px; /* Space before the send button */
 	line-height: 20px; /* Adjust based on your design */
 }
-
 #upload-label i {
 	color: #333; /* Icon color */
 	font-size: 16px; /* Icon size */
 }
 
-#message-form #send-button {
+/* Send Button Styles */
+#bottom-area #send-button {
 	background-color: #9cdf16; /* Green button */
 	font-weight: 5000;
 	color: #444;
@@ -537,16 +301,9 @@ html {
 	cursor: pointer;
 	margin-left: 10px;
 }
-
-#message-form #send-button:hover {
+#bottom-area #send-button:hover {
 	background-color: #bae95c;
 }
-
-/* Scrollbar Styles */
-#messages::-webkit-scrollbar {
-	width: 8px;
-}
-
 #send-button:disabled,
 #send-button:disabled:hover {
 	background-color: #ccc; /* Or any other color you use for disabled state */
@@ -554,66 +311,16 @@ html {
 	cursor: not-allowed;
 }
 
-#messages::-webkit-scrollbar-thumb {
-	background: #555; /* Scrollbar thumb */
-	border-radius: 4px;
-}
-
-/* to fix the grid being pushed off the side of the page on mobile */
-.input-container input,
-.input-container button,
-.class-input-dropdown .dropbtn {
-	width: 100%; /* Ensure they take up their container's width */
-	max-width: 100%; /* Prevent them from exceeding their container's width */
-	box-sizing: border-box;
-}
-
-/* Hide desktop specific things */
-.hidden-desktop {
-	display: none !important;
-}
-
-/* Error Message Styles */
-.error-message {
-	color: red;
-	margin-bottom: 12px; /* Adjust as needed */
-	text-align: center;
-	display: none; /* Initially hidden */
-}
-
-/* Error Highlight Styles */
-.error-highlight {
-	outline: 2px solid rgba(255, 0, 0, 0.5); /* Adds a red outline */
-	box-shadow: 0 0 4px rgba(255, 0, 0, 0.5); /* Adds a subtle red glow */
-}
-
-/* For Focusing */
-button:focus,
-input:focus,
-a:focus,
-select:focus,
-textarea:focus {
-	outline: 2px solid #9cdf16; /* Example green color */
-	outline-offset: 2px; /* Adds space between the outline and the element's border */
-}
-
-/* Additional style for dropdown options for consistency */
-.class-input-dropdown .dropdown-content a:focus {
-	border-color: #9cdf16;
-	outline: none; /* Removes the default focus outline */
-	box-shadow: 0 0 5px #9cdf16; /* Adds a glow effect */
-}
-
 /************* MOBILE *************/
 @media (max-width: 768px) {
-	/* Apply changes only within the #content-area */
+	/* Apply changes only within the #top-area */
 
 	#chat-container {
 		height: 100%;
 		display: flex;
 		flex-direction: column; /* Stack children vertically on mobile */
 	}
-	#content-area {
+	#top-area {
 		display: flex;
 		flex-direction: column; /* Stack children vertically on mobile */
 		height: 80%;
@@ -644,7 +351,7 @@ textarea:focus {
 	}
 
 	/* Place the travel details container first */
-	#travel-details-container {
+	#top-right-area {
 		box-sizing: border-box;
 		order: 1; /* Use order to make it appear on top */
 		width: 100%; /* Ensures full width but may need adjustment for padding */
@@ -663,7 +370,7 @@ textarea:focus {
 	}
 
 	/* Ensure messages appear after the travel details */
-	#messages {
+	#top-left-area {
 		padding-top: 10px;
 		order: 2; /* This will place it below the travel details on mobile */
 		width: 100%; /* Make it full width on smaller screens */
@@ -674,7 +381,7 @@ textarea:focus {
 	}
 
 	/* Ensure the message form stays at the bottom without changing its order */
-	#message-form {
+	#bottom-area {
 		order: 3; /* Explicitly keep the message form at the bottom */
 		padding-right: 12px;
 		width: 100%; /* Adjust if necessary to ensure full width on mobile */
