@@ -16,6 +16,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 }
+
 /* Chat Container Styles */
 #chat-container {
 	width: 100%;
@@ -23,9 +24,8 @@ body {
 	background-color: #444;
 	border-radius: 0;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-	display: flex;
-	flex-direction: column;
 }
+
 /* For Focusing */
 button:focus,
 input:focus,
@@ -60,7 +60,7 @@ textarea:focus {
 #chat-container #top-area {
 	display: flex;
 	flex: 1; /* This will make top-area flexible */
-	min-height: 0; /* Fix for flexbox overflow issue */
+	height: 87% !important;
 }
 
 /*************************************************************************************/
@@ -160,7 +160,6 @@ textarea:focus {
 	border-radius: 1rem 1rem 1rem 1rem;
 	background: #fff;
 	align-items: center;
-	justify-content: left;
 	text-align: center; /* center all items in child divs */
 	width: 35%;
 }
@@ -169,9 +168,6 @@ textarea:focus {
 #top-right-area #recycle-icon {
 	height: 40px;
 	width: 40px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 #top-right-area #recycle-icon img {
 	max-width: 100%;
@@ -199,6 +195,7 @@ textarea:focus {
 
 /* Submit button */
 #top-right-area #submit-button {
+	margin-top: auto; /* Pushes this button to the bottom of the container */
 	width: 100%; /* Match the width of input containers */
 	padding: 10px; /* Same padding as input fields for consistent height */
 	border-radius: 0.6rem; /* Match the border radius of input containers */
@@ -207,6 +204,7 @@ textarea:focus {
 	color: white; /* White text color */
 	font-size: 1rem; /* Match the font size of input text */
 	cursor: pointer; /* Change cursor to pointer on hover */
+	align-self: flex-end;
 }
 #top-right-area #submit-button:hover {
 	background-color: #bae95c; /* Slightly lighter green on hover */

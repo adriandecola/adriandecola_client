@@ -1,31 +1,37 @@
 // assistant/script.js
 
+// Global Variable Definitions (could have this passed in functions)
 let currentThreadId = null;
 
+// Handles Send Button
 document
-	.getElementById('message-form')
+	.getElementById('bottom-area')
 	.addEventListener('submit', function (event) {
 		event.preventDefault();
 		sendMessageFromInput();
 	});
 
+// Handles Submit Button
 document
 	.getElementById('message-input')
 	.addEventListener('keydown', function (event) {
 		const isSendButtonDisabled =
 			document.getElementById('send-button').disabled;
 
-		// Prevent sending message if Enter is pressed without the Shift key
-		// and ensure the send button is not disabled
+		/* 
+		Prevent sending message if Enter is pressed without the Shift key
+		and ensure the send button is not disabled 
+		*/
 		if (event.key === 'Enter' && !event.shiftKey && !isSendButtonDisabled) {
 			event.preventDefault(); // Prevent the default action to handle newline or form submission
 			sendMessageFromInput(); // Call your function to send the message
 		}
 	});
 
+// Handles Changes to message input
 document
 	.getElementById('message-input')
-	.addEventListener('input', updateTextArea);
+	.addEventListener('input', updateMessageInput);
 
 function sendMessageFromInput() {
 	// Disable the send button
@@ -34,15 +40,15 @@ function sendMessageFromInput() {
 	// Also disable the submit button in the travel details form
 	document.getElementById('submit-button').disabled = true;
 
+	// Get the message
 	const messageInput = document.getElementById('message-input');
 	const userMessage = messageInput.value.trim();
-	const fileId = messageInput.dataset.fileId || ''; // Retrieve the fileId if it exists
 
-	// Append flight details to user message
+	// Append material details to user message
 	const flightDetails = getFlightDetailsAsString();
 	// Use the separator here for server side seperations
 	// Can make this more secure later
-	const finalMessage = `${userMessage}|||${flightDetails}|||${fileId}`;
+	const finalMessage = `${userMessage}|||${flightDetails}|||`;
 
 	if (userMessage) {
 		console.log('Sending message:', finalMessage);
@@ -51,7 +57,7 @@ function sendMessageFromInput() {
 		getFormData(finalMessage);
 
 		messageInput.value = '';
-		updateTextArea();
+		updateMessageInput();
 
 		// Blur the textarea to hide the mobile keyboard
 		messageInput.blur();
@@ -63,106 +69,7 @@ function sendMessageFromInput() {
 	messageInput.focus();
 }
 
-function updateFormFields(formData) {
-	console.log('Raw formData:', formData);
-
-	// Parse formData from JSON string to Object
-	try {
-		const parsedFormData = JSON.parse(formData);
-		console.log('Parsed formData:', parsedFormData);
-
-		// Use parsedFormData for your logic
-		if (parsedFormData.travelType === 'round trip') {
-			document.getElementById('return').checked = true;
-			console.log('Set travel type to round trip');
-		} else if (parsedFormData.travelType === 'one-way') {
-			document.getElementById('one-way').checked = true;
-			console.log('Set travel type to one-way');
-		} else {
-			console.log(
-				'No matching travel type found in parsedFormData, or missing travelType field'
-			);
-		}
-
-		if (
-			parsedFormData.initialAirport &&
-			parsedFormData.initialAirport !== 'not specified'
-		) {
-			document.getElementById('from-airport').value =
-				parsedFormData.initialAirport;
-			console.log(
-				'Set initial airport to:',
-				parsedFormData.initialAirport
-			);
-		} else {
-			console.log(
-				'Initial airport not specified or missing in parsedFormData'
-			);
-		}
-
-		if (
-			parsedFormData.finalAirport &&
-			parsedFormData.finalAirport !== 'not specified'
-		) {
-			document.getElementById('to-airport').value =
-				parsedFormData.finalAirport;
-			console.log('Set final airport to:', parsedFormData.finalAirport);
-		} else {
-			console.log(
-				'Final airport not specified or missing in parsedFormData'
-			);
-		}
-
-		if (
-			parsedFormData.numberOfPassengers &&
-			parsedFormData.numberOfPassengers !== 'not specified'
-		) {
-			document.getElementById('passengers').value =
-				parsedFormData.numberOfPassengers;
-			console.log(
-				'Set number of passengers to:',
-				parsedFormData.numberOfPassengers
-			);
-		} else {
-			console.log(
-				'Number of passengers not specified or missing in parsedFormData'
-			);
-		}
-
-		if (
-			parsedFormData.flightClass &&
-			parsedFormData.flightClass !== 'not specified'
-		) {
-			const classOptions = {
-				economy: 'Economy',
-				'premium economy': 'Premium Economy',
-				business: 'Business',
-				'first class': 'First Class',
-			};
-			// Ensure the flight class string is converted to lower case correctly
-			const selectedClass =
-				classOptions[parsedFormData.flightClass.toLowerCase()];
-			if (selectedClass) {
-				document.getElementById('selected-class').textContent =
-					selectedClass;
-				console.log('Set flight class to:', selectedClass);
-			} else {
-				console.log(
-					'Flight class specified in parsedFormData not found in options:',
-					parsedFormData.flightClass
-				);
-			}
-		} else {
-			console.log(
-				'Flight class not specified or missing in parsedFormData'
-			);
-		}
-	} catch (error) {
-		console.error('Error parsing formData:', error);
-	}
-}
-
-function updateTextArea() {
+function updateMessageInput() {
 	const messageInput = document.getElementById('message-input');
 	let words = messageInput.value.split(/\s+/).filter(Boolean);
 
@@ -375,78 +282,6 @@ function submitFunction() {
 		console.log('CO2 Emissions request sent:', finalMessage);
 	}
 }
-
-//////////////////////////////// Travel Details JS ////////////////////////////////
-document.getElementById('passengers').addEventListener('focus', function () {
-	this.parentNode.classList.add('focused');
-});
-
-document.getElementById('passengers').addEventListener('blur', function () {
-	this.parentNode.classList.remove('focused');
-});
-
-function incrementValue() {
-	var value = parseInt(document.getElementById('passengers').value, 10);
-	value = isNaN(value) ? 1 : value;
-	value++;
-	document.getElementById('passengers').value = value;
-}
-
-function decrementValue() {
-	var value = parseInt(document.getElementById('passengers').value, 10);
-	value = isNaN(value) ? 1 : value;
-	value < 2 ? (value = 1) : value--;
-	document.getElementById('passengers').value = value;
-}
-
-// For the passanger input field's input
-document.getElementById('passengers').addEventListener('blur', function (e) {
-	if (e.target.value === '0' || e.target.value === '') {
-		e.target.value = '1';
-	}
-});
-document.getElementById('passengers').addEventListener('input', function (e) {
-	const cursorPosition = e.target.selectionStart - 1;
-	const originalValue = e.target.value;
-	const newValue = originalValue.replace(/\D+/g, '');
-
-	if (newValue !== originalValue) {
-		e.target.value = newValue;
-		e.target.setSelectionRange(cursorPosition, cursorPosition);
-	}
-
-	if (e.target.value === '0' || e.target.value === '') {
-		return;
-	}
-
-	if (e.target.value.length > 1 && e.target.value.startsWith('0')) {
-		e.target.value = e.target.value.substring(1);
-	}
-});
-
-/* for fosusing the right text box for correct highlighting */
-document.addEventListener('DOMContentLoaded', function () {
-	const dropBtn = document.getElementById('selected-class');
-	const classInputDropdown = document.querySelector('.class-input-dropdown');
-
-	// When the dropdown button is focused, add the 'focused' class to the parent
-	dropBtn.addEventListener('focus', function () {
-		classInputDropdown.classList.add('focused');
-	});
-
-	// When the dropdown button loses focus, remove the 'focused' class from the parent
-	dropBtn.addEventListener('blur', function () {
-		classInputDropdown.classList.remove('focused');
-	});
-});
-
-// Event listener to close the dropdown if clicked outside
-document.addEventListener('click', function (event) {
-	var dropdownContent = document.getElementById('class-options');
-	if (event.target.id !== 'selected-class') {
-		dropdownContent.style.display = 'none';
-	}
-});
 
 ///////////////////////////// Other helper functions ///////////////////////////////////////
 function updateCompanyDetails(formData) {
