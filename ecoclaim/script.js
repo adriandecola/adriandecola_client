@@ -52,17 +52,13 @@ function sendMessageFromInput() {
 	const messageInput = document.getElementById('message-input');
 	const userMessage = messageInput.value.trim();
 
-	// Append material details to user message
-	const flightDetails = getFlightDetailsAsString();
-	// Use the separator here for server side seperations
 	// Can make this more secure later
-	const finalMessage = `${userMessage}|||${flightDetails}|||`;
+	const finalMessage = `${userMessage}|||${userMessage}|||`;
 
 	if (userMessage) {
 		console.log('Sending message:', finalMessage);
 		displayMessage(userMessage, 'user');
 		sendMessageToBackend(finalMessage);
-		getFormData(finalMessage);
 
 		// Clear the message input area
 		messageInput.value = '';
