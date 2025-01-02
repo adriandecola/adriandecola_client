@@ -1,44 +1,52 @@
 // assistant/script.js
 
-// Global Variable Definitions (could have this passed in functions)
-let currentThreadId = null;
+/////////////////////////////// Global Variable Definitions /////////////////////////////
 
-// Handles Send Button
-document
-	.getElementById('bottom-area')
-	.addEventListener('submit', function (event) {
-		event.preventDefault();
+let currentThreadId = null; //(could have this passed in functions)
+
+//////////////////////////////////// Event Listeners ////////////////////////////////////
+
+// DOM references
+const submitButton = document.getElementById('submit-button');
+const sendButton = document.getElementById('send-button');
+const messageInput = document.getElementById('message-input');
+
+// Handles sending generated message via clicking the Sumbit button
+//////////////////////////////////////////////////////////////////////
+///////////////////////////FILL THIS OUT//////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+// Handles sending message via clicking the Send button
+sendButton.addEventListener('click', function (event) {
+	// makes sure the Send button is not disabled
+	if (!sendButton.disabled) {
+		event.preventDefault(); // Let's me define what happens
 		sendMessageFromInput();
-	});
+	}
+});
 
-// Handles Submit Button
-document
-	.getElementById('message-input')
-	.addEventListener('keydown', function (event) {
-		const isSendButtonDisabled =
-			document.getElementById('send-button').disabled;
+// Handles sending message via Enter in message-input
+messageInput.addEventListener('keydown', function (event) {
+	/* 
+	Prevent sending message if:
+		- Enter is pressed with the Shift key
+						or 
+		- The send button is disabled
+	*/
+	if (event.key === 'Enter' && !event.shiftKey && !sendButton.disabled) {
+		event.preventDefault(); // Let's me define what happens
+		sendMessageFromInput();
+	}
+});
 
-		/* 
-		Prevent sending message if Enter is pressed without the Shift key
-		and ensure the send button is not disabled 
-		*/
-		if (event.key === 'Enter' && !event.shiftKey && !isSendButtonDisabled) {
-			event.preventDefault(); // Prevent the default action to handle newline or form submission
-			sendMessageFromInput(); // Call your function to send the message
-		}
-	});
+// Handles changes to message input
+messageInput.addEventListener('input', updateMessageInput);
 
-// Handles Changes to message input
-document
-	.getElementById('message-input')
-	.addEventListener('input', updateMessageInput);
+/////////////////////////////////// Primary Functions ///////////////////////////////////
 
 function sendMessageFromInput() {
-	// Disable the send button
-	document.getElementById('send-button').disabled = true;
-
-	// Also disable the submit button in the travel details form
-	document.getElementById('submit-button').disabled = true;
+	// Disable both buttons
+	setButtonStates(true);
 
 	// Get the message
 	const messageInput = document.getElementById('message-input');
@@ -56,14 +64,12 @@ function sendMessageFromInput() {
 		sendMessage(finalMessage);
 		getFormData(finalMessage);
 
+		// Clear the message input area
 		messageInput.value = '';
 		updateMessageInput();
 
 		// Blur the textarea to hide the mobile keyboard
 		messageInput.blur();
-
-		// Clear the fileId after sending the message
-		delete messageInput.dataset.fileId;
 	}
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
@@ -149,6 +155,15 @@ async function sendMessage(userMessage) {
 	}
 }
 
+///////////////////////////// Other helper functions ///////////////////////////////////////
+
+// Helper function to set button states
+function setButtonStates(isDisabled) {
+	submitButton.disabled = isDisabled;
+	sendButton.disabled = isDisabled;
+}
+
+// Helper function that displays loading message while waiting on backend response
 function displayLoadingMessage() {
 	const messagesContainer = document.getElementById('scrollable-messages');
 	const loadingWrapper = document.createElement('div');
@@ -182,6 +197,7 @@ function displayLoadingMessage() {
 	return loadingWrapper.id;
 }
 
+// Helper function to update loading message with backend response
 function updateLoadingMessage(loadingMessageId, newMessage) {
 	const loadingMessage = document.getElementById(loadingMessageId);
 	if (loadingMessage) {
@@ -199,6 +215,8 @@ function updateLoadingMessage(loadingMessageId, newMessage) {
 	}
 }
 
+// Helper function to remove the loading message if there has been an error
+// in updating it
 function removeLoadingMessage(loadingMessageId) {
 	const loadingMessage = document.getElementById(loadingMessageId);
 	if (loadingMessage) {
@@ -207,87 +225,7 @@ function removeLoadingMessage(loadingMessageId) {
 	}
 }
 
-/////////////////////// Handles the submit button ///////////////////////
-function submitFunction() {
-	// For error highlighting
-	let isFormValid = true;
-
-	// Reset error states
-	document.querySelectorAll('.error-highlight').forEach((element) => {
-		element.classList.remove('error-highlight');
-	});
-
-	const errorMessageDiv = document.getElementById('error-message');
-	errorMessageDiv.style.display = 'none'; // Hide error message by default
-
-	// Input validation checks
-	const travelTypeChecked = document.querySelector(
-		'input[name="travel"]:checked'
-	);
-	const fromAirport = document.getElementById('from-airport');
-	const toAirport = document.getElementById('to-airport');
-	const passengers = document.getElementById('passengers');
-	const selectedClassText =
-		document.getElementById('selected-class').textContent;
-
-	if (!travelTypeChecked) {
-		document.querySelector('#travel-type').classList.add('error-highlight');
-		isFormValid = false;
-	}
-	if (fromAirport.value.trim() === '') {
-		fromAirport.classList.add('error-highlight');
-		isFormValid = false;
-	}
-	if (toAirport.value.trim() === '') {
-		toAirport.classList.add('error-highlight');
-		isFormValid = false;
-	}
-	if (parseInt(passengers.value, 10) < 1 || passengers.value.trim() === '') {
-		passengers.classList.add('error-highlight');
-		isFormValid = false;
-	}
-	if (
-		selectedClassText === 'Select Class' ||
-		selectedClassText.trim() === ''
-	) {
-		document
-			.querySelector('.class-input-dropdown')
-			.classList.add('error-highlight');
-		isFormValid = false;
-	}
-
-	// Show error message if form is invalid
-	if (!isFormValid) {
-		errorMessageDiv.textContent =
-			'Please fill out all aspects of your flight before submitting.';
-		errorMessageDiv.style.display = 'block'; // Make the error message visible
-	} else {
-		// Sending message...
-		// Construct the request message with CO2 in subscript
-		const co2RequestMessage =
-			'Can you calculate the CO<sub>2</sub> emissions for my flight?';
-
-		// Append flight details to the request message
-		const flightDetails = getFlightDetailsAsString();
-		const finalMessage = `${co2RequestMessage}|||${flightDetails}`;
-
-		// Use displayMessage to show the request in the chat
-		displayMessage(co2RequestMessage, 'user');
-
-		// Send the finalMessage to the backend for processing
-		sendMessage(finalMessage);
-
-		// No need go get form data since its filled out
-
-		console.log('CO2 Emissions request sent:', finalMessage);
-	}
-}
-
-///////////////////////////// Other helper functions ///////////////////////////////////////
-function updateCompanyDetails(formData) {
-	// This is a relic, still here for compiliation
-}
-
+// Helper function to convert markdown (from assistant response) to HTML
 function convertMarkdownToHTML(markdownText) {
 	let htmlText = markdownText
 		.replace(/\n/g, '<br>')
