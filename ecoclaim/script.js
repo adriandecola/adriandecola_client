@@ -10,6 +10,7 @@ let currentThreadId = null; //(could have this passed in functions)
 const submitButton = document.getElementById('submit-button');
 const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
+const wordCount = document.getElementById('word-count');
 
 // Handles sending generated message via clicking the Sumbit button
 //////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ messageInput.addEventListener('keydown', function (event) {
 });
 
 // Handles changes to message input
-messageInput.addEventListener('input', updateMessageInput);
+messageInput.addEventListener('input', updateAndEnforceWordCount);
 
 /////////////////////////////////// Primary Functions ///////////////////////////////////
 
@@ -59,7 +60,7 @@ function sendMessageFromInput() {
 
 		// Clear the message input area
 		messageInput.value = '';
-		updateMessageInput();
+		updateAndEnforceWordCount();
 
 		// Blur the textarea to hide the mobile keyboard
 		messageInput.blur();
@@ -67,18 +68,6 @@ function sendMessageFromInput() {
 
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
-}
-
-function updateMessageInput() {
-	const messageInput = document.getElementById('message-input');
-	let words = messageInput.value.split(/\s+/).filter(Boolean);
-
-	if (words.length > 150) {
-		words = words.slice(0, 150);
-		messageInput.value = words.join(' ');
-	}
-
-	document.getElementById('word-count').textContent = `${words.length}/150`;
 }
 
 function displayMessage(message, role) {
@@ -155,6 +144,19 @@ async function sendMessageToBackend(userMessage) {
 function setButtonStates(isDisabled) {
 	submitButton.disabled = isDisabled;
 	sendButton.disabled = isDisabled;
+}
+
+// Helper function that updates and enforces the word count in the
+// message-input
+function updateAndEnforceWordCount() {
+	let words = messageInput.value.split(/\s+/).filter(Boolean);
+
+	if (words.length > 150) {
+		words = words.slice(0, 150);
+		messageInput.value = words.join(' ');
+	}
+
+	wordCount.textContent = `${words.length}/150`;
 }
 
 // Helper function that displays loading message while waiting on backend response
