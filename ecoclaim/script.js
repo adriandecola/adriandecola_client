@@ -49,16 +49,13 @@ function sendMessageFromInput() {
 	setButtonStates(true);
 
 	// Get the message
-	const messageInput = document.getElementById('message-input');
 	const userMessage = messageInput.value.trim();
 
-	// Can make this more secure later
-	const finalMessage = `${userMessage}|||${userMessage}|||`;
-
+	// Makes sure message isn't empty
 	if (userMessage) {
-		console.log('Sending message:', finalMessage);
+		console.log('Sending message:', userMessage);
 		displayMessage(userMessage, 'user');
-		sendMessageToBackend(finalMessage);
+		sendMessageToBackend(userMessage);
 
 		// Clear the message input area
 		messageInput.value = '';
@@ -67,6 +64,7 @@ function sendMessageFromInput() {
 		// Blur the textarea to hide the mobile keyboard
 		messageInput.blur();
 	}
+
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
 }
@@ -212,7 +210,7 @@ function updateLoadingMessage(loadingMessageId, newMessage) {
 }
 
 // Helper function to remove the loading message if there has been an error
-// in updating it
+// in updating it.
 function removeLoadingMessage(loadingMessageId) {
 	const loadingMessage = document.getElementById(loadingMessageId);
 	if (loadingMessage) {
