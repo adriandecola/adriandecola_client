@@ -54,8 +54,13 @@ function sendMessageFromInput() {
 
 	// Makes sure message isn't empty
 	if (userMessage) {
+		// Console log for debugging
 		console.log('Sending message:', userMessage);
+
+		// Displays the user message
 		displayMessage(userMessage, 'user');
+
+		// Gets response from backend
 		sendMessageToBackend(userMessage);
 
 		// Clear the message input area
