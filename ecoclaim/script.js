@@ -61,7 +61,7 @@ function sendMessageFromInput() {
 	if (userMessage) {
 		console.log('Sending message:', finalMessage);
 		displayMessage(userMessage, 'user');
-		sendMessage(finalMessage);
+		sendMessageToBackend(finalMessage);
 		getFormData(finalMessage);
 
 		// Clear the message input area
@@ -107,7 +107,7 @@ function displayMessage(message, role) {
 	messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-async function sendMessage(userMessage) {
+async function sendMessageToBackend(userMessage) {
 	const loadingMessageId = displayLoadingMessage(); // Display loading message
 
 	try {
