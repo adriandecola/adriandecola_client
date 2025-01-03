@@ -164,30 +164,49 @@ function displayMessage(message, role) {
 	// Add elements to DOM
 	messageWrapper.appendChild(messageDiv);
 	messagesContainer.appendChild(messageWrapper);
+
+	// Ensures message container is scrolled to the bottom
+	// when new message is added
 	messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-// Helper function that displays loading message while waiting on backend response
+// Helper function that displays an assistant loading message while waiting on
+// backend response
 function displayLoadingMessage() {
-	const messagesContainer = document.getElementById('scrollable-messages');
+	// Creating a div for the message wrapper (for alignment)
+	// and adding assistant styles
 	const loadingWrapper = document.createElement('div');
 	loadingWrapper.classList.add('message-wrapper', 'assistant');
-	loadingWrapper.id = 'loading-' + new Date().getTime(); // Unique ID for the loading message
 
+	// Creating a unique ID for the loading message
+	loadingWrapper.id = 'loading-' + new Date().getTime();
+
+	// Creating message div (for background) and adding assistant styles
 	const loadingDiv = document.createElement('div');
 	loadingDiv.classList.add('message', 'assistant');
-	loadingDiv.innerHTML = '<span class="content">...</span>'; // Initial "..." message
 
+	// Initial "..." message
+	loadingDiv.innerHTML = '<span class="content">...</span>';
+
+	// Addint elements to DOM
 	loadingWrapper.appendChild(loadingDiv);
 	messagesContainer.appendChild(loadingWrapper);
+
+	// Ensures message container is scrolled to the bottom
+	// when new message is added
 	messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
 	// Add ellipses over time
 	let ellipses = '';
-	const maxEllipses = 3;
+	const maxEllipses = 3; // Grows to '...'
 	const ellipsisInterval = setInterval(() => {
+		// Adds a period
 		ellipses += '.';
+
+		/// Starts back at '.' after '...' (replaces '....' with '.')
 		if (ellipses.length > maxEllipses) ellipses = '.';
+
+		// Updates the loading message's content
 		loadingDiv.querySelector('.content').innerHTML = ellipses;
 
 		// Check if the loading message still exists, clear interval if it's removed
@@ -196,8 +215,7 @@ function displayLoadingMessage() {
 		}
 	}, 500); // Adjust the interval time as needed
 
-	loadingWrapper.ellipsisInterval = ellipsisInterval;
-
+	// Returns the unique ID of the assistant loading message wrapper
 	return loadingWrapper.id;
 }
 
