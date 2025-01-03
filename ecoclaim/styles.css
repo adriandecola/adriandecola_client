@@ -147,7 +147,7 @@ textarea:focus {
 	font-size: 0.9em; /* Smaller font size for messages */
 }
 #top-left-area #scrollable-messages .message.user {
-	background-color: #408830; /* Green background for user messages */
+	background-color: #408830; /* Green (matches color of leav in logo) for user */
 }
 #top-left-area #scrollable-messages .message.assistant {
 	background-color: #666; /* Lighter grey for default (assistant) messages */
