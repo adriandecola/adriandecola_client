@@ -71,28 +71,36 @@ function sendMessageFromInput() {
 		// Blur the textarea to hide the mobile keyboard
 		messageInput.blur();
 	}
-
+	/////////////////// SHOULD I BLUR THAN REFOCUS WHY IS REFOCUS HERE??
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
 }
 
 async function sendMessageToBackend(userMessage) {
-	const loadingMessageId = displayLoadingMessage(); // Display loading message
+	// Display loading message while we wait on backend response
+	const loadingMessageId = displayLoadingMessage();
 
 	try {
-		console.log('Posting to /assistant');
-		const response = await fetch('https://api.adriandecola.com/assistant', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				message: userMessage,
-				threadId: currentThreadId, // Pass the currentThreadId
-			}),
-		});
-		// For debugging
-		console.log(response);
+		// Console log for debugging
+		console.log('Posting to /ecoclaim_assistant');
+
+		// Hitting the backend endpoint
+		const response = await fetch(
+			'https://api.adriandecola.com/ecoclaim_assistant',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					message: userMessage,
+					threadId: currentThreadId, // Pass the currentThreadId
+				}),
+			}
+		);
+
+		// Console log of response for debugging
+		console.log('Backend response: ', response);
 
 		// Getting response data in JSON format
 		const responseData = await response.json();
@@ -100,27 +108,17 @@ async function sendMessageToBackend(userMessage) {
 		// Update the currentThreadId (if one was created)
 		currentThreadId = responseData.threadId;
 
-		// If the form was filled, update the company details // from chat completion gpt
-		if (responseData.formData) {
-			updateCompanyDetails(responseData.formData);
-		}
-
-		//If form data was filled from flight function, update the travel details
-		if (responseData.flightFormData) {
-			updateFlightDetails(
-				responseData.flightFormData,
-				responseData.flightEmissions
-			);
-		}
-
-		// Update the loading message with the response
-		updateLoadingMessage(loadingMessageId, responseData.response);
+		// Update the loading message with the assistant's response
+		updateLoadingMessage(loadingMessageId, responseData.assistantResponse);
 	} catch (err) {
+		// Console log the error for debugging
 		console.error('Fetch error:', err);
+
 		// Remove the loading message in case of error
 		removeLoadingMessage(loadingMessageId);
-		// Re-enable the send button even if there's an error
-		document.getElementById('send-button').disabled = false;
+
+		// Re-enable the buttons even if there's an error
+		setButtonStates(false);
 	}
 }
 
