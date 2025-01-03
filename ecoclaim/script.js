@@ -11,6 +11,7 @@ const submitButton = document.getElementById('submit-button');
 const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
 const wordCount = document.getElementById('word-count');
+const messagesContainer = document.getElementById('scrollable-messages');
 
 // Handles sending generated message via clicking the Sumbit button
 //////////////////////////////////////////////////////////////////////
@@ -76,20 +77,23 @@ function sendMessageFromInput() {
 }
 
 function displayMessage(message, role) {
+	// Console log for debugging
 	console.log('Displaying message:', message, 'Role:', role);
-	const messagesContainer = document.getElementById('scrollable-messages');
 
 	// Create a wrapper for alignment
 	const messageWrapper = document.createElement('div');
 	messageWrapper.classList.add('message-wrapper', role);
 
+	// Create a div for message background
 	const messageDiv = document.createElement('div');
 	messageDiv.classList.add('message', role);
 
-	messageDiv.innerHTML = `<span class="content">${convertMarkdownToHTML(
+	// Add message content
+	messageDiv.innerHTML = `<span class="message-content">${convertMarkdownToHTML(
 		message
 	)}</span>`;
 
+	// Add elements to DOM
 	messageWrapper.appendChild(messageDiv);
 	messagesContainer.appendChild(messageWrapper);
 	messagesContainer.scrollTop = messagesContainer.scrollHeight;
