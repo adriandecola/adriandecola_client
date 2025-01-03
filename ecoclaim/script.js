@@ -76,29 +76,6 @@ function sendMessageFromInput() {
 	messageInput.focus();
 }
 
-function displayMessage(message, role) {
-	// Console log for debugging
-	console.log('Displaying message:', message, 'Role:', role);
-
-	// Create a wrapper for alignment
-	const messageWrapper = document.createElement('div');
-	messageWrapper.classList.add('message-wrapper', role);
-
-	// Create a div for message background
-	const messageDiv = document.createElement('div');
-	messageDiv.classList.add('message', role);
-
-	// Add message content
-	messageDiv.innerHTML = `<span class="message-content">${convertMarkdownToHTML(
-		message
-	)}</span>`;
-
-	// Add elements to DOM
-	messageWrapper.appendChild(messageDiv);
-	messagesContainer.appendChild(messageWrapper);
-	messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
 async function sendMessageToBackend(userMessage) {
 	const loadingMessageId = displayLoadingMessage(); // Display loading message
 
@@ -166,6 +143,30 @@ function updateAndEnforceWordCount() {
 	}
 
 	wordCount.textContent = `${words.length}/150`;
+}
+
+// Helper function that displays a message in the scrollable-messages div
+function displayMessage(message, role) {
+	// Console log for debugging
+	console.log('Displaying message:', message, 'Role:', role);
+
+	// Create a wrapper for alignment
+	const messageWrapper = document.createElement('div');
+	messageWrapper.classList.add('message-wrapper', role);
+
+	// Create a div for message background
+	const messageDiv = document.createElement('div');
+	messageDiv.classList.add('message', role);
+
+	// Add message content
+	messageDiv.innerHTML = `<span class="message-content">${convertMarkdownToHTML(
+		message
+	)}</span>`;
+
+	// Add elements to DOM
+	messageWrapper.appendChild(messageDiv);
+	messagesContainer.appendChild(messageWrapper);
+	messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 // Helper function that displays loading message while waiting on backend response
