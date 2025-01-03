@@ -108,8 +108,16 @@ async function sendMessageToBackend(userMessage) {
 		// Update the currentThreadId (if one was created)
 		currentThreadId = responseData.threadId;
 
+		// Converting any markdown in the assistant's response to HTML
+		assistantResponseHTML = convertMarkdownToHTML(
+			responseData.assistantResponse
+		);
+
 		// Update the loading message with the assistant's response
-		updateLoadingMessage(loadingMessageId, responseData.assistantResponse);
+		updateLoadingMessage(loadingMessageId, assistantResponseHTML);
+
+		// Re-enable the buttons
+		setButtonStates(false);
 	} catch (err) {
 		// Console log the error for debugging
 		console.error('Fetch error:', err);
@@ -188,7 +196,7 @@ function displayLoadingMessage() {
 	// Initial "..." message
 	loadingDiv.innerHTML = '<span class="content">...</span>';
 
-	// Addint elements to DOM
+	// Adding elements to DOM
 	loadingWrapper.appendChild(loadingDiv);
 	messagesContainer.appendChild(loadingWrapper);
 
@@ -210,6 +218,7 @@ function displayLoadingMessage() {
 		loadingDiv.querySelector('.content').innerHTML = ellipses;
 
 		// Check if the loading message still exists, clear interval if it's removed
+		// In case there is an error later in clearing the interval
 		if (!document.getElementById(loadingWrapper.id)) {
 			clearInterval(ellipsisInterval);
 		}
@@ -220,20 +229,18 @@ function displayLoadingMessage() {
 }
 
 // Helper function to update loading message with backend response
-function updateLoadingMessage(loadingMessageId, newMessage) {
+function updateLoadingMessage(loadingMessageId, assistantResponseHTML) {
+	// Gets loading message
 	const loadingMessage = document.getElementById(loadingMessageId);
+
+	// Ensures loading message exists
 	if (loadingMessage) {
+		// Clears interval for ellipses
 		clearInterval(loadingMessage.ellipsisInterval);
 
-		// Markdown to HTML conversion
+		// Adding assistant's response to loading message
 		loadingMessage.querySelector('.content').innerHTML =
-			convertMarkdownToHTML(newMessage);
-
-		// Re-enable the send button
-		document.getElementById('send-button').disabled = false;
-
-		// Also re-enable the submit button in the travel details form
-		document.getElementById('submit-button').disabled = false;
+			assistantResponseHTML;
 	}
 }
 
