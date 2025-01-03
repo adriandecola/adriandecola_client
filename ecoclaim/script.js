@@ -59,7 +59,8 @@ function sendMessageFromInput() {
 		console.log('Sending message:', userMessage);
 
 		// Displays the user message
-		displayMessage(userMessage, 'user');
+		// Convert markdown to HTML too in case user used markdown functionality
+		displayMessage(convertMarkdownToHTML(userMessage), 'user');
 
 		// Gets response from backend
 		sendMessageToBackend(userMessage);
@@ -151,8 +152,12 @@ function updateAndEnforceWordCount() {
 	wordCount.textContent = `${words.length}/150`;
 }
 
-// Helper function that displays a message in the scrollable-messages div
-function displayMessage(message, role) {
+// Helper function that displays a message in the scrollable-messages div.
+// Currently it only displays user messages, but if streaming is integrated
+// it can display user or assistant messages.
+// Assumes the message does not contain markdown.
+// Currently the only roles that are styled are 'assistant' and 'user'
+function displayMessage(messageHTML, role) {
 	// Console log for debugging
 	console.log('Displaying message:', message, 'Role:', role);
 
@@ -165,9 +170,7 @@ function displayMessage(message, role) {
 	messageDiv.classList.add('message', role);
 
 	// Add message content
-	messageDiv.innerHTML = `<span class="message-content">${convertMarkdownToHTML(
-		message
-	)}</span>`;
+	messageDiv.innerHTML = `<span class="message-content">${messageHTML}</span>`;
 
 	// Add elements to DOM
 	messageWrapper.appendChild(messageDiv);
@@ -179,7 +182,7 @@ function displayMessage(message, role) {
 }
 
 // Helper function that displays an assistant loading message while waiting on
-// backend response
+// backend response and returns its ID
 function displayLoadingMessage() {
 	// Creating a div for the message wrapper (for alignment)
 	// and adding assistant styles
@@ -194,7 +197,7 @@ function displayLoadingMessage() {
 	loadingDiv.classList.add('message', 'assistant');
 
 	// Initial "..." message
-	loadingDiv.innerHTML = '<span class="content">...</span>';
+	loadingDiv.innerHTML = '<span class="message-content">...</span>';
 
 	// Adding elements to DOM
 	loadingWrapper.appendChild(loadingDiv);
