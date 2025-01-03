@@ -16,6 +16,7 @@ const messagesContainer = document.getElementById('scrollable-messages');
 // Handles sending generated message via clicking the Sumbit button
 //////////////////////////////////////////////////////////////////////
 ///////////////////////////FILL THIS OUT//////////////////////////////
+//	MUST WAIT UNTIL ||| functionality and ability to add materials is added
 //////////////////////////////////////////////////////////////////////
 
 // Handles sending message via clicking the Send button
