@@ -196,6 +196,19 @@ textarea:focus {
 	margin-bottom: 15px;
 }
 
+/* For weight input and add button container */
+#top-right-area #weight-and-add-button-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* For weight units container (radio buttons) */
+#top-right-area #weight-and-add-button-container #weight-units-container {
+	display: flex;
+	flex-direction: column;
+}
+
 /* Submit button */
 #top-right-area #submit-button {
 	margin-top: auto; /* Pushes this button to the bottom of the container */
