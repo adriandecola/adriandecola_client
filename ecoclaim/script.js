@@ -160,7 +160,7 @@ function updateAndEnforceWordCount() {
 // Currently the only roles that are styled are 'assistant' and 'user'
 function displayMessage(messageHTML, role) {
 	// Console log for debugging
-	console.log('Displaying message:', message, 'Role:', role);
+	console.log('Displaying message:', messageHTML, 'Role:', role);
 
 	// Create a wrapper for alignment
 	const messageWrapper = document.createElement('div');

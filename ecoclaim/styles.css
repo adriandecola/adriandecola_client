@@ -186,27 +186,22 @@ textarea:focus {
 	line-height: 1.8rem;
 }
 
+/***************** For adding-materials-container and items *****************/
+/* For adding-materials-container */
+#top-right-area #adding-materials-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	/* Currently no margin or padding */
+}
+
 /* For the line breaks */
-/* CURRENTLY NONE BUT MIGHT WANT LATER */
 #top-right-area .line-break {
 	width: 95%; /* Adjust the width as necessary */
 	height: 1px; /* Adjust the thickness of the line as necessary */
 	background-color: #e0dce4; /* Adjust the color as necessary */
 	margin-top: 10px;
 	margin-bottom: 15px;
-}
-
-/* For weight input and add button container */
-#top-right-area #weight-and-add-button-container {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-/* For weight units container (radio buttons) */
-#top-right-area #weight-and-add-button-container #weight-units-container {
-	display: flex;
-	flex-direction: column;
 }
 
 /* Submit button */

@@ -56,40 +56,38 @@
                 <div id="top-right-header" class="hidden-mobile">
                     Estimate Emissions Associated with Restoration Services
                 </div>
+
                 <!-- Placeholder for Error Messages -->
                 <div id="error-message" class="error-message"></div>
+
                 <!-- Line break here -->
                 <div class="line-break hidden-mobile"></div>
-                <!-- Material Input Field -->
-                <div class="material-form-group">
-                    <label for="material-dropdown">Material</label>
-                    <select id="material-dropdown">
-                        <option value="" disabled selected>-select one-</option>
-                        <option value="Asphalt">Asphalt</option>
-                        <option value="Brick & Block">Brick & Block</option>
-                        <option value="Cardboard">Cardboard</option>
-                        <option value="Concrete">Concrete</option>
-                        <option value="Drywall">Drywall</option>
-                        <option value="Glass">Glass</option>
-                        <option value="Landfill">Landfill</option>
-                        <option value="Metal">Metal</option>
-                        <option value="Plastic (Hard)">Plastic (Hard)</option>
-                        <option value="Plastic (Soft)">Plastic (Soft)</option>
-                        <option value="Wood">Wood</option>
-                    </select>
-                </div>
-                <!-- Weight Input Field with lb and kg radio buttons -->
-                <div class="material-form-group" id="weight-and-add-button-container">
-                    <div>
-                        <label for="weight-input">Weight</label>
-                        <input type="number" id="weight-number-input" placeholder="Enter weight">
+
+                <!-- Holds the 'form' to add materials-->
+                <div id="adding-materials-container">
+                    <!-- Material Input Field -->
+                    <div class="material-form-group" id="material-dropdown-menu">
+                        <label for="material-dropdown-options">Material</label>
+                        <select id="material-dropdown-options">
+                            <option value="" disabled selected>- Select one -</option>
+                            <option value="asphalt">Asphalt</option>
+                            <option value="brick_block">Brick & Block</option>
+                            <option value="cardboard">Cardboard</option>
+                            <option value="concrete">Concrete</option>
+                            <option value="drywall">Drywall</option>
+                            <option value="glass">Glass</option>
+                            <option value="landfill">Landfill</option>
+                            <option value="metal">Metal</option>
+                            <option value="plastic_hard">Plastic (Hard)</option>
+                            <option value="plastic_soft">Plastic (Soft)</option>
+                            <option value="wood">Wood</option>
+                        </select>
                     </div>
-                    <div id="weight-units-container">
-                        <label><input type="radio" name="weight-unit" value="lb"> lb</label>
-                        <label><input type="radio" name="weight-unit" value="kg"> kg</label>
-                    </div>
-                    <button type="button" id="add-button">Add</button>
+                    
                 </div>
+
+                <!-- Line break here -->
+                <div class="line-break hidden-mobile"></div>
 
                 <!-- Project Materials to Add Grid -->
                 <!-- FILL THIS OUT-->
