@@ -107,6 +107,9 @@ async function sendMessageToBackend(userMessage) {
 		// Getting response data in JSON format
 		const responseData = await response.json();
 
+		// Console log of response data for debugging
+		console.log('Backend Response Data::', responseData);
+
 		// Update the currentThreadId (if one was created)
 		currentThreadId = responseData.threadId;
 
