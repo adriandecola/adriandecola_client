@@ -292,3 +292,45 @@ function convertMarkdownToHTML(markdownText) {
 
 	return htmlText;
 }
+
+///////////////////////////// Beta function for assistant to call ///////////////////////////////////////
+// probably no need for either of those checks as the assistant should fill out all fields and only fields
+// specified
+function calculateCarbonEmissionsForAllCommonMaterials(materials) {
+	// Emissions factors (kg CO₂ per kg of material)
+	const emissionsFactors = {
+		asphalt: 0.05, // Example: Asphalt generates 0.05 kg CO₂ per kg
+		brick_block: 0.03, // Example: Brick/Block generates 0.03 kg CO₂ per kg
+		cardboard: 0.02, // Example: Cardboard generates 0.02 kg CO₂ per kg
+		concrete: 0.1, // Example: Concrete generates 0.1 kg CO₂ per kg
+		drywall: 0.07, // Example: Drywall generates 0.07 kg CO₂ per kg
+		glass: 0.2, // Example: Glass generates 0.2 kg CO₂ per kg
+		landfill: 0.15, // Example: Landfill generates 0.15 kg CO₂ per kg
+		metal: 0.5, // Example: Metal generates 0.5 kg CO₂ per kg
+		plastic_hard: 0.4, // Example: Hard plastic generates 0.4 kg CO₂ per kg
+		plastic_soft: 0.3, // Example: Soft plastic generates 0.3 kg CO₂ per kg
+		wood: 0.01, // Example: Wood generates 0.01 kg CO₂ per kg
+	};
+
+	// Calculate emissions for each material
+	const emissions = {};
+	let totalEmissions = 0;
+
+	for (const material in materials) {
+		if (
+			materials.hasOwnProperty(material) &&
+			emissionsFactors[material] !== undefined
+		) {
+			// Calculate emissions for the current material
+			emissions[material] =
+				materials[material] * emissionsFactors[material];
+			// Add to the overall total emissions
+			totalEmissions += emissions[material];
+		}
+	}
+
+	// Add the total emissions to the result
+	emissions.total = totalEmissions;
+
+	return emissions;
+}
