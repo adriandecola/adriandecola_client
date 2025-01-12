@@ -226,9 +226,10 @@ function displayLoadingMessage() {
 	// when new message is added
 	messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-	// Add ellipses over time
+	// Add ellipses interval to the loading message that cycle over time
 	let ellipses = '';
 	const maxEllipses = 3; // Grows to '...'
+
 	const ellipsisInterval = setInterval(() => {
 		// Adds a period
 		ellipses += '.';
@@ -236,15 +237,17 @@ function displayLoadingMessage() {
 		/// Starts back at '.' after '...' (replaces '....' with '.')
 		if (ellipses.length > maxEllipses) ellipses = '.';
 
-		// Updates the loading message's content
-		loadingDiv.querySelector('.message-content').innerHTML = ellipses;
-
-		// Check if the loading message still exists, clear interval if it's removed
-		// In case there is an error later in clearing the interval
+		// Clears interval if the loading message wrapper has been removed
 		if (!document.getElementById(loadingWrapper.id)) {
 			clearInterval(ellipsisInterval);
 		}
+
+		// Updates the loading message's content to the new proper ellipses state
+		loadingDiv.querySelector('.message-content').innerHTML = ellipses;
 	}, 500); // Adjust the interval time as needed
+
+	// Attach interval to wrapper
+	loadingWrapper.ellipsisInterval = ellipsisInterval;
 
 	// Returns the unique ID of the assistant loading message wrapper
 	return loadingWrapper.id;
@@ -252,10 +255,10 @@ function displayLoadingMessage() {
 
 // Helper function to update loading message with backend response
 function updateLoadingMessage(loadingMessageId, assistantResponseHTML) {
-	// Gets loading message
+	// Gets the loading message
 	const loadingMessage = document.getElementById(loadingMessageId);
 
-	// Ensures loading message exists
+	// Ensures the loading message exists before modifying its properties
 	if (loadingMessage) {
 		// Clears interval for ellipses
 		clearInterval(loadingMessage.ellipsisInterval);
@@ -269,9 +272,15 @@ function updateLoadingMessage(loadingMessageId, assistantResponseHTML) {
 // Helper function to remove the loading message if there has been an error
 // in updating it.
 function removeLoadingMessage(loadingMessageId) {
+	// Gets the loading message
 	const loadingMessage = document.getElementById(loadingMessageId);
+
+	// Ensures the loading message exists before modifying its properties
 	if (loadingMessage) {
+		// Clears interval for ellipses
 		clearInterval(loadingMessage.ellipsisInterval);
+
+		//Removes the loading message
 		loadingMessage.remove();
 	}
 }
