@@ -15,7 +15,7 @@ const messagesContainer = document.getElementById('scrollable-messages');
 
 // Handles sending generated message via clicking the Sumbit button
 //////////////////////////////////////////////////////////////////////
-///////////////////////////FILL THIS OUT//////////////////////////////
+///////////////////////////FILL THIS OUT//////////////////////////////483912457*(&$#(*)&$#@(*))
 //	MUST WAIT UNTIL ||| functionality and ability to add materials is added
 //////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ sendButton.addEventListener('click', function (event) {
 	// makes sure the Send button is not disabled
 	if (!sendButton.disabled) {
 		event.preventDefault(); // Let's me define what happens
-		sendMessageFromInput();
+		handleSendingUserMessage();
 	}
 });
 
@@ -38,7 +38,7 @@ messageInput.addEventListener('keydown', function (event) {
 	*/
 	if (event.key === 'Enter' && !event.shiftKey && !sendButton.disabled) {
 		event.preventDefault(); // Let's me define what happens
-		sendMessageFromInput();
+		handleSendingUserMessage();
 	}
 });
 
@@ -47,14 +47,22 @@ messageInput.addEventListener('input', updateAndEnforceWordCount);
 
 /////////////////////////////////// Primary Functions ///////////////////////////////////
 
-function sendMessageFromInput() {
+async function handleSendingUserMessage() {
 	// Disable both buttons
 	setButtonStates(true);
 
 	// Get the message
 	const userMessage = messageInput.value.trim();
 
-	// Makes sure message isn't empty
+	// Clear the message input area
+	messageInput.value = '';
+	updateAndEnforceWordCount();
+
+	// Blur the textarea to hide the mobile keyboard
+	messageInput.blur();
+
+	// Makes sure message isn't empty before displaying it and getting an assistant
+	// response for it
 	if (userMessage) {
 		// Console log for debugging
 		console.log('Sending message:', userMessage);
@@ -63,25 +71,40 @@ function sendMessageFromInput() {
 		// Convert markdown to HTML too in case user used markdown functionality
 		displayMessage(convertMarkdownToHTML(userMessage), 'user');
 
-		// Gets response from backend
-		sendMessageToBackend(userMessage);
+		// Display loading message while we wait on backend response
+		const loadingMessageId = displayLoadingMessage();
 
-		// Clear the message input area
-		messageInput.value = '';
-		updateAndEnforceWordCount();
+		try {
+			// Getting a response from the backend
+			const assistantResponse = await sendMessageToBackend(userMessage);
 
-		// Blur the textarea to hide the mobile keyboard
-		messageInput.blur();
+			// Converting any markdown in the assistant's response to HTML
+			const assistantResponseHTML =
+				convertMarkdownToHTML(assistantResponse);
+
+			// If no error is raised then we update the loading message
+			// with the assistant's response
+			updateLoadingMessage(loadingMessageId, assistantResponseHTML);
+		} catch (error) {
+			// Console logging for error handling
+			console.log('Error from sendMessageToBackend():: ', error);
+
+			// Displaying ***Error*** message from assistant (theres probably better
+			// ways to notify the user of an error, update this later)
+			removeLoadingMessage(loadingMessageId);
+			displayMessage(loadingMessageId, '<strong>***Error***</strong>');
+		}
 	}
+
 	/////////////////// SHOULD I BLUR THAN REFOCUS WHY IS REFOCUS HERE??
 	// Re-focus on the message input field after sending the message
 	messageInput.focus();
+
+	// Re-enable the buttons
+	setButtonStates(false);
 }
 
 async function sendMessageToBackend(userMessage) {
-	// Display loading message while we wait on backend response
-	const loadingMessageId = displayLoadingMessage();
-
 	try {
 		// Console log for debugging
 		console.log('Posting to /ecoclaim_assistant');
@@ -113,25 +136,17 @@ async function sendMessageToBackend(userMessage) {
 		// Update the currentThreadId (if one was created)
 		currentThreadId = responseData.threadId;
 
-		// Converting any markdown in the assistant's response to HTML
-		assistantResponseHTML = convertMarkdownToHTML(
-			responseData.assistantResponse
-		);
+		// Grabbing the assistant's response
+		assistantResponse = responseData.assistantResponse;
 
-		// Update the loading message with the assistant's response
-		updateLoadingMessage(loadingMessageId, assistantResponseHTML);
-
-		// Re-enable the buttons
-		setButtonStates(false);
+		// Returning the assistant's response
+		return assistantResponseHTML;
 	} catch (err) {
 		// Console log the error for debugging
-		console.error('Fetch error:', err);
+		console.log('Fetch error:', err);
 
-		// Remove the loading message in case of error
-		removeLoadingMessage(loadingMessageId);
-
-		// Re-enable the buttons even if there's an error
-		setButtonStates(false);
+		// Throwing the error
+		throw err;
 	}
 }
 
