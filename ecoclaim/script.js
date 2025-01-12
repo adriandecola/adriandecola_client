@@ -92,7 +92,7 @@ async function handleSendingUserMessage() {
 			// Displaying ***Error*** message from assistant (theres probably better
 			// ways to notify the user of an error, update this later)
 			removeLoadingMessage(loadingMessageId);
-			displayMessage(loadingMessageId, '<strong>***Error***</strong>');
+			displayMessage('<strong>***Error***</strong>', 'assistant');
 		}
 	}
 
@@ -140,7 +140,7 @@ async function sendMessageToBackend(userMessage) {
 		assistantResponse = responseData.assistantResponse;
 
 		// Returning the assistant's response
-		return assistantResponseHTML;
+		return assistantResponse;
 	} catch (err) {
 		// Console log the error for debugging
 		console.log('Fetch error:', err);
@@ -172,10 +172,10 @@ function updateAndEnforceWordCount() {
 }
 
 // Helper function that displays a message in the scrollable-messages div.
-// Currently it only displays user messages, but if streaming is integrated
-// it can display user or assistant messages.
 // Assumes the message does not contain markdown.
+// It can render HTML in the message
 // Currently the only roles that are styled are 'assistant' and 'user'
+// -> could definetly apply TypeScript to this whole project
 function displayMessage(messageHTML, role) {
 	// Console log for debugging
 	console.log('Displaying message:', messageHTML, 'Role:', role);
