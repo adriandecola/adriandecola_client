@@ -222,7 +222,7 @@ function displayLoadingMessage() {
 		if (ellipses.length > maxEllipses) ellipses = '.';
 
 		// Updates the loading message's content
-		loadingDiv.querySelector('.content').innerHTML = ellipses;
+		loadingDiv.querySelector('.message-content').innerHTML = ellipses;
 
 		// Check if the loading message still exists, clear interval if it's removed
 		// In case there is an error later in clearing the interval
@@ -246,7 +246,7 @@ function updateLoadingMessage(loadingMessageId, assistantResponseHTML) {
 		clearInterval(loadingMessage.ellipsisInterval);
 
 		// Adding assistant's response to loading message
-		loadingMessage.querySelector('.content').innerHTML =
+		loadingMessage.querySelector('.message-content').innerHTML =
 			assistantResponseHTML;
 	}
 }
